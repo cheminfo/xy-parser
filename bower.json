@@ -1,6 +1,6 @@
 {
   "name": "xy-parser",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "Parse a text-file and convert it to an array of XY points",
   "keywords": [
     "xy file parser",
