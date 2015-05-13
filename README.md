@@ -8,8 +8,14 @@
 XY file parser allows to convert a text file to an array of XY.
 
 
+## Example of use:
+```
+var result=XYParser.parse(realValue, {normalize: true})
+```
 
+## Options
 
+* normalize : will set the maximal value to 1
 
 ## License
 
