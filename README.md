@@ -16,6 +16,9 @@ var result=XYParser.parse(realValue, {normalize: true})
 ## Options
 
 * normalize : will set the maximal value to 1
+* arrayType :
+  * 'xxyy' [[x1,x2,x3,...],[y1,y2,y2,...]]
+  * 'xyxy' [[x1,y1],[x2,y2],[x3,y3], ...]] (default)
 
 ## License
 

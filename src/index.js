@@ -5,7 +5,19 @@ module.exports.parse = function (text, options) {
     var lines = text.split(/[\r\n]+/);
 
     var maxY = Number.MIN_VALUE;
-    var result = [];
+
+    var counter=0;
+    var xxyy= (options.arrayType==='xxyy') ? true : false;
+    if (xxyy) {
+        var result = [
+            new Array(lines.length),
+            new Array(lines.length)
+        ];
+    } else {
+        var result = new Array(lines.length);
+    }
+
+
     for (var i = 0; i < lines.length; i++) {
         var line = lines[i];
         // we will consider only lines that contains only numbers
@@ -15,17 +27,37 @@ module.exports.parse = function (text, options) {
                 var x = parseFloat(fields[0]);
                 var y = parseFloat(fields[1]);
                 if (y > maxY) maxY = y;
-                result.push([x, y]);
+                if (xxyy) {
+                    result[0][counter]=x;
+                    result[1][counter++]=y;
+                } else {
+                    result[counter++]=[x, y];
+                }
             }
         }
     }
 
+    if (xxyy) {
+        result[0].length=counter;
+        result[1].length=counter;
+    } else {
+        result.length=counter;
+    }
+
     if (options.normalize) {
-        maxY /= 100;
-        for (var i = 0; i < result.length; i++) {
-            result[i][1] /= maxY;
+        if (xxyy) {
+            for (var i = 0; i < counter; i++) {
+                result[1][i] /= maxY;
+            }
+        } else {
+            for (var i = 0; i < counter; i++) {
+                result[i][1] /= maxY;
+            }
         }
+
     }
 
     return result;
 };
+
+
