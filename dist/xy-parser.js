@@ -2,7 +2,7 @@
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory();
 	else if(typeof define === 'function' && define.amd)
-		define(factory);
+		define([], factory);
 	else if(typeof exports === 'object')
 		exports["xyParser"] = factory();
 	else
@@ -56,7 +56,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	'use strict';
 
-	module.exports.parse = function (text, options) {
+	function parseXY (text, options) {
 	    var options = options || {};
 	    var lines = text.split(/[\r\n]+/);
 
@@ -117,7 +117,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 
-
+	parseXY.parse = parseXY; // keep compatibility
+	module.exports = parseXY; // direct export
 
 /***/ }
 /******/ ])
