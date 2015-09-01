@@ -8,9 +8,12 @@
 XY file parser allows to convert a text file to an array of XY.
 
 
+
+
 ## Example of use:
 ```
-var result=XYParser.parse(realValue, {normalize: true})
+var parseXY = require('xy-parser')
+var result=parseXY(realValue, {normalize: true})
 ```
 
 ## Options

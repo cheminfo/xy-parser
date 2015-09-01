@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports.parse = function (text, options) {
+function parseXY (text, options) {
     var options = options || {};
     var lines = text.split(/[\r\n]+/);
 
@@ -61,3 +61,5 @@ module.exports.parse = function (text, options) {
 };
 
 
+parseXY.parse = parseXY; // keep compatibility
+module.exports = parseXY; // direct export
