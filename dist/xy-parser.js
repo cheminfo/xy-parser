@@ -73,15 +73,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var result = new Array(lines.length);
 	    }
 
-
 	    for (var i = 0; i < lines.length; i++) {
 	        var line = lines[i];
 	        // we will consider only lines that contains only numbers
 	        if (line.match(/[0-9]+/) && line.match(/^[0-9eE,;\. \t-]+$/)) {
+	            line=line.trim();
 	            var fields = line.split(/[,; \t]+/);
 	            if (fields && fields.length == 2) {
 	                var x = parseFloat(fields[0]);
 	                var y = parseFloat(fields[1]);
+
 	                if (y > maxY) maxY = y;
 	                if (xxyy) {
 	                    result[0][counter]=x;
