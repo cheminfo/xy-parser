@@ -4,7 +4,7 @@ var XYParser = require('..');
 var fs = require('fs');
 
 
-describe.only('ir.asc', function () {
+describe('ir.asc', function () {
     var filename="ir.asc";
     var data=fs.readFileSync(__dirname + "/data/"+filename).toString();
 
