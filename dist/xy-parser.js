@@ -52,9 +52,18 @@ return /******/ (function(modules) { // webpackBootstrap
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
+
+	var uniqueX = __webpack_require__(1);
+
+	/**
+	 *
+	 * @param text
+	 * @param options
+	 * @returns {*[]|Array}
+	 */
 
 	function parseXY (text, options) {
 	    var options = options || {};
@@ -114,12 +123,57 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    }
 
+	    if (options.uniqueX) {
+	        if (! xxyy) throw new Error('Can only make unique X for xxyy format');
+	        uniqueX(result[0], result[1])
+	    }
+
 	    return result;
 	};
 
 
 	parseXY.parse = parseXY; // keep compatibility
 	module.exports = parseXY; // direct export
+
+/***/ },
+/* 1 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	/**
+	 * In place modification of the 2 arrays to make X unique and sum the Y if X has the same value
+	 * @param xs
+	 * @param ys
+	 */
+
+	function uniqueX(xs, ys) {
+	    if (xs.length < 2) return;
+
+	    var current = xs[0];
+	    var counter = 0;
+
+	    for (var i = 1; i < xs.length; i++) {
+	        if (current !== xs[i]) {
+	            counter++;
+	            current = xs[i];
+	            xs[counter] = xs[i];
+	            if (i !== counter) {
+	                ys[counter] = 0;
+	            }
+	        }
+	        if (i !== counter) {
+	            ys[counter] += ys[i];
+	        }
+
+	    }
+
+	    xs.length = counter + 1;
+	    ys.length = counter + 1;
+	}
+
+	module.exports = uniqueX;
+
 
 /***/ }
 /******/ ])
