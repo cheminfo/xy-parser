@@ -10,7 +10,7 @@ describe('test3', function () {
     
     var result=XYParser.parse(data,
         {
-            uniqueX: true,
+            uniqueX: true,chem
             arrayType: 'xxyy'
         });
 
