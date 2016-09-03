@@ -13,8 +13,23 @@ XY file parser allows to convert a text file to an array of XY.
 ## Example of use:
 ```
 var parseXY = require('xy-parser')
-var result=parseXY(realValue, {normalize: true})
+var result=parseXY(realValue)
 ```
+
+Or with options:
+
+```
+var parseXY = require('xy-parser')
+var result=XYParser.parse(data,
+    {
+        uniqueX: true,
+        arrayType: 'xxyy',
+        normalize: true
+    }
+);
+```
+
+
 
 ## Options
 
@@ -22,6 +37,7 @@ var result=parseXY(realValue, {normalize: true})
 * arrayType :
   * 'xxyy' [[x1,x2,x3,...],[y1,y2,y2,...]]
   * 'xyxy' [[x1,y1],[x2,y2],[x3,y3], ...]] (default)
+* uniqueX : Make the X values unique (works only with xxyy format). If the X value is repeated the sum of Y is done.
 
 ## License
 

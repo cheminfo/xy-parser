@@ -1,5 +1,14 @@
 'use strict';
 
+var uniqueX = require('ml-arrayxy-uniquex');
+
+/**
+ *
+ * @param text
+ * @param options
+ * @returns {*[]|Array}
+ */
+
 function parseXY (text, options) {
     var options = options || {};
     var lines = text.split(/[\r\n]+/);
@@ -56,6 +65,11 @@ function parseXY (text, options) {
             }
         }
 
+    }
+
+    if (options.uniqueX) {
+        if (! xxyy) throw new Error('Can only make unique X for xxyy format');
+        uniqueX(result[0], result[1])
     }
 
     return result;

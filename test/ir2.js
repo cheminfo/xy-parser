@@ -12,13 +12,10 @@ describe('ir2.asc', function () {
 
     var min=Number.MAX_VALUE;
     var max=Number.MIN_VALUE;
-    console.log(result.length);
     for (var i=0; i<result.length; i++) {
         if (result[i][1]<min) min=result[i][1];
         if (result[i][1]>max) max=result[i][1];
     }
-    console.log(min,max);
-
 
     it('Check array and length', function () {
         min.should.approximately(5.604768, 0.001);
