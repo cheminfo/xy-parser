@@ -12,8 +12,8 @@ XY file parser allows to convert a text file to an array of XY.
 
 ## Example of use:
 ```
-var parseXY = require('xy-parser')
-var result=parseXY(realValue)
+var parseXY = require('xy-parser');
+var result=parseXY.parse('1 2\r3 4');
 ```
 
 Or with options:
