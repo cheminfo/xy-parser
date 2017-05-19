@@ -3,7 +3,7 @@
 var XYParser = require('..');
 var fs = require('fs');
 
-describe.only('Test with some spaces', function () {
+describe('Test with some spaces', function () {
     var filename="test4.txt";
     var data=fs.readFileSync(__dirname + "/data/"+filename).toString();
 
