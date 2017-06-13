@@ -2,6 +2,14 @@
 
 var uniqueXFunction = require('ml-arrayxy-uniquex');
 
+const defaultOptions = {
+    normalize: false,
+    uniqueX: false,
+    arrayType: 'xyxy',
+    xColumn: 0,
+    yColumn: 1
+}
+
 /**
  *
  * @param text
@@ -15,25 +23,23 @@ var uniqueXFunction = require('ml-arrayxy-uniquex');
  * @param {number} [options.minNumberColumns=(Math.max(xColumn, yColumn)+1 || 2)] - A number that specifies the yColumn
  * @returns {*[]|Array}
  */
+function parseXY (text, options) {
+    options = Object.assign({}, defaultOptions, options);
+    var normalize = options.normalize;
+    var uniqueX = options.uniqueX;
+    var arrayType = options.arrayType;
+    var xColumn = options.xColumn;
+    var yColumn = options.yColumn;
+    var maxNumberColumns = options.maxNumberColumns;
+    var minNumberColumns = options.minNumberColumns;
+    if (!maxNumberColumns) maxNumberColumns = (Math.max(xColumn, yColumn) + 1) || 2;
+    if (!minNumberColumns) minNumberColumns = (Math.max(xColumn, yColumn) + 1) || 2;
 
-function parseXY (text, options={}) {
-    let {
-        normalize=false,
-        uniqueX=false,
-        arrayType='xyxy',
-        xColumn=0,
-        yColumn=1,
-        maxNumberColumns,
-        minNumberColumns
-    } = options;
-    if (!maxNumberColumns) maxNumberColumns=(Math.max(xColumn, yColumn)+1) || 2;
-    if (!minNumberColumns) minNumberColumns=(Math.max(xColumn, yColumn)+1) || 2;
     var lines = text.split(/[\r\n]+/);
-
     var maxY = Number.MIN_VALUE;
 
-    var counter=0;
-    var xxyy= (arrayType==='xxyy') ? true : false;
+    var counter = 0;
+    var xxyy = (arrayType === 'xxyy') ? true : false;
     if (xxyy) {
         var result = [
             new Array(lines.length),
