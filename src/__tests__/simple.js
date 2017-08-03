@@ -9,10 +9,10 @@ describe('simple test', () => {
     it('Check array and length without options', () => {
         var result1 = parseXY(data);
         expect(result1).toEqual([
-            [ 1, 2 ],
-            [ 3, 4 ],
-            [ 5, 6 ],
-            [ 7, 8 ]
+            [1, 2],
+            [3, 4],
+            [5, 6],
+            [7, 8]
         ]);
     });
 
