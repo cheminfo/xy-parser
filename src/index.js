@@ -1,58 +1,48 @@
-'use strict';
-
-var uniqueXFunction = require('ml-arrayxy-uniquex');
-
-const defaultOptions = {
-    normalize: false,
-    uniqueX: false,
-    arrayType: 'xyxy',
-    xColumn: 0,
-    yColumn: 1
-}
+import uniqueXFunction from 'ml-arrayxy-uniquex';
 
 /**
  *
- * @param text
- * @param options
- * @param options.arrayType xxyy or xyxy
- * @param {boolean} options.normalize=false
- * @param {boolean} options.uniqueX
+ * @param {string} text
+ * @param {object} [options]
+ * @param {string} [options.arrayType] - xxyy or xyxy
+ * @param {boolean} [options.normalize=false]
+ * @param {boolean} [options.uniqueX]
  * @param {number} [options.xColumn=0] - A number that specifies the xColumn
  * @param {number} [options.yColumn=1] - A number that specifies the yColumn
- * @param {number} [options.maxNumberColumns=(Math.max(xColumn, yColumn)+1 || 2)] - A number that specifies the yColumn
- * @param {number} [options.minNumberColumns=(Math.max(xColumn, yColumn)+1 || 2)] - A number that specifies the yColumn
- * @returns {*[]|Array}
+ * @param {number} [options.maxNumberColumns=(Math.max(xColumn, yColumn)+1)] - A number that specifies the yColumn
+ * @param {number} [options.minNumberColumns=(Math.max(xColumn, yColumn)+1)] - A number that specifies the yColumn
+ * @return {Array}
  */
-function parseXY (text, options) {
-    options = Object.assign({}, defaultOptions, options);
-    var normalize = options.normalize;
-    var uniqueX = options.uniqueX;
-    var arrayType = options.arrayType;
-    var xColumn = options.xColumn;
-    var yColumn = options.yColumn;
-    var maxNumberColumns = options.maxNumberColumns;
-    var minNumberColumns = options.minNumberColumns;
-    if (!maxNumberColumns) maxNumberColumns = (Math.max(xColumn, yColumn) + 1) || 2;
-    if (!minNumberColumns) minNumberColumns = (Math.max(xColumn, yColumn) + 1) || 2;
+export function parseXY(text, options = {}) {
+    const {
+        normalize = false,
+        uniqueX = false,
+        arrayType = 'xyxy',
+        xColumn = 0,
+        yColumn = 1,
+        maxNumberColumns = Math.max(xColumn, yColumn) + 1,
+        minNumberColumns = Math.max(xColumn, yColumn) + 1
+    } = options;
 
     var lines = text.split(/[\r\n]+/);
     var maxY = Number.MIN_VALUE;
 
     var counter = 0;
-    var xxyy = (arrayType === 'xxyy') ? true : false;
+    var xxyy = (arrayType === 'xxyy');
+    var result;
     if (xxyy) {
-        var result = [
+        result = [
             new Array(lines.length),
             new Array(lines.length)
         ];
     } else {
-        var result = new Array(lines.length);
+        result = new Array(lines.length);
     }
-    for (var i = 0; i < lines.length; i++) {
-        var line = lines[i];
+    for (var l = 0; l < lines.length; l++) {
+        var line = lines[l];
         // we will consider only lines that contains only numbers
-        if (line.match(/[0-9]+/) && line.match(/^[0-9eE,;\. \t-]+$/)) {
-            line=line.trim();
+        if (line.match(/[0-9]+/) && line.match(/^[0-9eE,;. \t-]+$/)) {
+            line = line.trim();
             var fields = line.split(/[,; \t]+/);
             if (fields && fields.length >= minNumberColumns && fields.length <= maxNumberColumns) {
                 let x = parseFloat(fields[xColumn]);
@@ -60,20 +50,20 @@ function parseXY (text, options) {
 
                 if (y > maxY) maxY = y;
                 if (xxyy) {
-                    result[0][counter]=x;
-                    result[1][counter++]=y;
+                    result[0][counter] = x;
+                    result[1][counter++] = y;
                 } else {
-                    result[counter++]=[x, y];
+                    result[counter++] = [x, y];
                 }
             }
         }
     }
 
     if (xxyy) {
-        result[0].length=counter;
-        result[1].length=counter;
+        result[0].length = counter;
+        result[1].length = counter;
     } else {
-        result.length=counter;
+        result.length = counter;
     }
 
     if (normalize) {
@@ -82,21 +72,17 @@ function parseXY (text, options) {
                 result[1][i] /= maxY;
             }
         } else {
-            for (var i = 0; i < counter; i++) {
-                result[i][1] /= maxY;
+            for (var j = 0; j < counter; j++) {
+                result[j][1] /= maxY;
             }
         }
 
     }
 
     if (uniqueX) {
-        if (! xxyy) throw new Error('Can only make unique X for xxyy format');
-        uniqueXFunction(result[0], result[1])
+        if (!xxyy) throw new Error('can only make unique X for xxyy format');
+        uniqueXFunction(result[0], result[1]);
     }
 
     return result;
-};
-
-
-parseXY.parse = parseXY; // keep compatibility
-module.exports = parseXY; // direct export
+}
