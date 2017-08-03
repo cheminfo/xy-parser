@@ -1,17 +1,19 @@
 import uniqueXFunction from 'ml-arrayxy-uniquex';
 
 /**
- *
- * @param {string} text
+ * Parse a text-file and convert it to an array of XY points
+ * @param {string} text - csv or tsv strings
  * @param {object} [options]
- * @param {string} [options.arrayType] - xxyy or xyxy
- * @param {boolean} [options.normalize=false]
- * @param {boolean} [options.uniqueX]
- * @param {number} [options.xColumn=0] - A number that specifies the xColumn
- * @param {number} [options.yColumn=1] - A number that specifies the yColumn
- * @param {number} [options.maxNumberColumns=(Math.max(xColumn, yColumn)+1)] - A number that specifies the yColumn
- * @param {number} [options.minNumberColumns=(Math.max(xColumn, yColumn)+1)] - A number that specifies the yColumn
- * @return {Array}
+ * @param {string} [options.arrayType = 'xyxy'] - xxyy or xyxy
+ * * 'xxyy' `[[x1,x2,x3,...],[y1,y2,y2,...]]`
+ * * 'xyxy' `[[x1,y1],[x2,y2],[x3,y3], ...]]`
+ * @param {boolean} [options.normalize = false] - will set the maximum value to 1
+ * @param {boolean} [options.uniqueX = false] - Make the X values unique (works only with 'xxyy' format). If the X value is repeated the sum of Y is done.
+ * @param {number} [options.xColumn = 0] - A number that specifies the x column
+ * @param {number} [options.yColumn = 1] - A number that specifies the y column
+ * @param {number} [options.maxNumberColumns = (Math.max(xColumn, yColumn)+1)] - A number that specifies the maximum number of y columns
+ * @param {number} [options.minNumberColumns = (Math.max(xColumn, yColumn)+1)] - A number that specifies the minimum number of y columns
+ * @return {Array<Array<number>>} - check the 'arrayType' option
  */
 export function parseXY(text, options = {}) {
     const {

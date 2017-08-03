@@ -13,19 +13,20 @@ Parse a text-file and convert it to an array of XY points.
 
 ## Usage
 ```js
-import {parseXY} from 'xy-parser'
-var result = parseXY('1 2\r3 4');
-```
-
-Or with options:
-
-```js
-import {parseXY} from 'xy-parser'
-var result = parseXY(data,{
-    uniqueX: true,
-    arrayType: 'xxyy',
-    normalize: true
-});
+import {parseXY} from 'xy-parser';
+const data = `1   2
+3   4
+5   6
+7   8`;
+const result = parseXY(data);
+/* result ->
+[
+    [ 1, 2 ],
+    [ 3, 4 ],
+    [ 5, 6 ],
+    [ 7, 8 ]
+]
+*/
 ```
 
 ## [API Documentation](https://cheminfo-js.github.io/xy-parser/)
