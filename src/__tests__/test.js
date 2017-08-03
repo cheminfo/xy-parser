@@ -62,5 +62,6 @@ test('Errors', () => {
     var filename = 'text1.txt';
     var data = readFileSync(path + filename).toString();
     expect(() => parseXY(data, {uniqueX: true, arrayType: 'xyxy'})).toThrow('can only make unique X for xxyy format');
+    expect(() => parseXY(data, {arrayType: 'bla'})).toThrow('unsupported arrayType (bla)');
 });
 

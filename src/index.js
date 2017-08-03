@@ -27,19 +27,20 @@ export function parseXY(text, options = {}) {
     } = options;
 
     var lines = text.split(/[\r\n]+/);
-    var maxY = Number.MIN_VALUE;
 
-    var counter = 0;
-    var xxyy = (arrayType === 'xxyy');
-    var result;
-    if (xxyy) {
-        result = [
-            new Array(lines.length),
-            new Array(lines.length)
-        ];
-    } else {
-        result = new Array(lines.length);
+    switch (arrayType) {
+        case 'xxyy':
+            return xxyy(lines, minNumberColumns, maxNumberColumns, xColumn, yColumn, normalize, uniqueX);
+        case 'xyxy':
+            return xyxy(lines, minNumberColumns, maxNumberColumns, xColumn, yColumn, normalize, uniqueX);
+        default:
+            throw new Error(`unsupported arrayType (${arrayType})`);
     }
+}
+
+function xxyy(lines, minNumberColumns, maxNumberColumns, xColumn, yColumn, normalize, uniqueX) {
+    var maxY = Number.MIN_VALUE;
+    var result = [[], []];
     for (var l = 0; l < lines.length; l++) {
         var line = lines[l];
         // we will consider only lines that contains only numbers
@@ -51,39 +52,52 @@ export function parseXY(text, options = {}) {
                 let y = parseFloat(fields[yColumn]);
 
                 if (y > maxY) maxY = y;
-                if (xxyy) {
-                    result[0][counter] = x;
-                    result[1][counter++] = y;
-                } else {
-                    result[counter++] = [x, y];
-                }
+                result[0].push(x);
+                result[1].push(y);
             }
         }
-    }
-
-    if (xxyy) {
-        result[0].length = counter;
-        result[1].length = counter;
-    } else {
-        result.length = counter;
     }
 
     if (normalize) {
-        if (xxyy) {
-            for (var i = 0; i < counter; i++) {
-                result[1][i] /= maxY;
-            }
-        } else {
-            for (var j = 0; j < counter; j++) {
-                result[j][1] /= maxY;
-            }
+        for (var i = 0; i < result[0].length; i++) {
+            result[1][i] /= maxY;
         }
-
     }
 
     if (uniqueX) {
-        if (!xxyy) throw new Error('can only make unique X for xxyy format');
         uniqueXFunction(result[0], result[1]);
+    }
+
+    return result;
+}
+
+function xyxy(lines, minNumberColumns, maxNumberColumns, xColumn, yColumn, normalize, uniqueX) {
+    if (uniqueX) {
+        throw new Error('can only make unique X for xxyy format');
+    }
+
+    var maxY = Number.MIN_VALUE;
+    var result = [];
+    for (var l = 0; l < lines.length; l++) {
+        var line = lines[l];
+        // we will consider only lines that contains only numbers
+        if (line.match(/[0-9]+/) && line.match(/^[0-9eE,;. \t-]+$/)) {
+            line = line.trim();
+            var fields = line.split(/[,; \t]+/);
+            if (fields && fields.length >= minNumberColumns && fields.length <= maxNumberColumns) {
+                let x = parseFloat(fields[xColumn]);
+                let y = parseFloat(fields[yColumn]);
+
+                if (y > maxY) maxY = y;
+                result.push([x, y]);
+            }
+        }
+    }
+
+    if (normalize) {
+        for (var j = 0; j < result.length; j++) {
+            result[j][1] /= maxY;
+        }
     }
 
     return result;
