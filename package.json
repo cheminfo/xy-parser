@@ -1,6 +1,6 @@
 {
   "name": "xy-parser",
-  "version": "1.5.0",
+  "version": "2.0.0",
   "description": "Parse a text-file and convert it to an array of XY points",
   "main": "lib/index.js",
   "module": "src/index.js",

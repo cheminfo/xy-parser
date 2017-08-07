@@ -43,9 +43,6 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// expose the module cache
 /******/ 	__webpack_require__.c = installedModules;
 /******/
-/******/ 	// identity function for calling harmony imports with the correct context
-/******/ 	__webpack_require__.i = function(value) { return value; };
-/******/
 /******/ 	// define getter function for harmony exports
 /******/ 	__webpack_require__.d = function(exports, name, getter) {
 /******/ 		if(!__webpack_require__.o(exports, name)) {
@@ -73,11 +70,137 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 1);
+/******/ 	return __webpack_require__(__webpack_require__.s = 0);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, '__esModule', { value: true });
+
+function _interopDefault(ex) {
+    return ex && typeof ex === 'object' && 'default' in ex ? ex['default'] : ex;
+}
+
+var uniqueXFunction = _interopDefault(__webpack_require__(1));
+
+/**
+ * Parse a text-file and convert it to an array of XY points
+ * @param {string} text - csv or tsv strings
+ * @param {object} [options]
+ * @param {string} [options.arrayType = 'xyxy'] - xxyy or xyxy
+ * * 'xxyy' `[[x1,x2,x3,...],[y1,y2,y2,...]]`
+ * * 'xyxy' `[[x1,y1],[x2,y2],[x3,y3], ...]]`
+ * @param {boolean} [options.normalize = false] - will set the maximum value to 1
+ * @param {boolean} [options.uniqueX = false] - Make the X values unique (works only with 'xxyy' format). If the X value is repeated the sum of Y is done.
+ * @param {number} [options.xColumn = 0] - A number that specifies the x column
+ * @param {number} [options.yColumn = 1] - A number that specifies the y column
+ * @param {number} [options.maxNumberColumns = (Math.max(xColumn, yColumn)+1)] - A number that specifies the maximum number of y columns
+ * @param {number} [options.minNumberColumns = (Math.max(xColumn, yColumn)+1)] - A number that specifies the minimum number of y columns
+ * @return {Array<Array<number>>} - check the 'arrayType' option
+ */
+function parseXY(text, options = {}) {
+    var _options$normalize = options.normalize,
+        normalize = _options$normalize === undefined ? false : _options$normalize,
+        _options$uniqueX = options.uniqueX,
+        uniqueX = _options$uniqueX === undefined ? false : _options$uniqueX,
+        _options$arrayType = options.arrayType,
+        arrayType = _options$arrayType === undefined ? 'xyxy' : _options$arrayType,
+        _options$xColumn = options.xColumn,
+        xColumn = _options$xColumn === undefined ? 0 : _options$xColumn,
+        _options$yColumn = options.yColumn,
+        yColumn = _options$yColumn === undefined ? 1 : _options$yColumn,
+        _options$maxNumberCol = options.maxNumberColumns,
+        maxNumberColumns = _options$maxNumberCol === undefined ? Math.max(xColumn, yColumn) + 1 : _options$maxNumberCol,
+        _options$minNumberCol = options.minNumberColumns,
+        minNumberColumns = _options$minNumberCol === undefined ? Math.max(xColumn, yColumn) + 1 : _options$minNumberCol;
+
+
+    var lines = text.split(/[\r\n]+/);
+
+    switch (arrayType) {
+        case 'xxyy':
+            return xxyy(lines, minNumberColumns, maxNumberColumns, xColumn, yColumn, normalize, uniqueX);
+        case 'xyxy':
+            return xyxy(lines, minNumberColumns, maxNumberColumns, xColumn, yColumn, normalize, uniqueX);
+        default:
+            throw new Error(`unsupported arrayType (${arrayType})`);
+    }
+}
+
+function xxyy(lines, minNumberColumns, maxNumberColumns, xColumn, yColumn, normalize, uniqueX) {
+    var maxY = Number.MIN_VALUE;
+    var result = [[], []];
+    for (var l = 0; l < lines.length; l++) {
+        var line = lines[l];
+        // we will consider only lines that contains only numbers
+        if (line.match(/[0-9]+/) && line.match(/^[0-9eE,;. \t-]+$/)) {
+            line = line.trim();
+            var fields = line.split(/[,; \t]+/);
+            if (fields && fields.length >= minNumberColumns && fields.length <= maxNumberColumns) {
+                var x = parseFloat(fields[xColumn]);
+                var y = parseFloat(fields[yColumn]);
+
+                if (y > maxY) maxY = y;
+                result[0].push(x);
+                result[1].push(y);
+            }
+        }
+    }
+
+    if (normalize) {
+        for (var i = 0; i < result[0].length; i++) {
+            result[1][i] /= maxY;
+        }
+    }
+
+    if (uniqueX) {
+        uniqueXFunction(result[0], result[1]);
+    }
+
+    return result;
+}
+
+function xyxy(lines, minNumberColumns, maxNumberColumns, xColumn, yColumn, normalize, uniqueX) {
+    if (uniqueX) {
+        throw new Error('can only make unique X for xxyy format');
+    }
+
+    var maxY = Number.MIN_VALUE;
+    var result = [];
+    for (var l = 0; l < lines.length; l++) {
+        var line = lines[l];
+        // we will consider only lines that contains only numbers
+        if (line.match(/[0-9]+/) && line.match(/^[0-9eE,;. \t-]+$/)) {
+            line = line.trim();
+            var fields = line.split(/[,; \t]+/);
+            if (fields && fields.length >= minNumberColumns && fields.length <= maxNumberColumns) {
+                var x = parseFloat(fields[xColumn]);
+                var y = parseFloat(fields[yColumn]);
+
+                if (y > maxY) maxY = y;
+                result.push([x, y]);
+            }
+        }
+    }
+
+    if (normalize) {
+        for (var j = 0; j < result.length; j++) {
+            result[j][1] /= maxY;
+        }
+    }
+
+    return result;
+}
+
+exports.parseXY = parseXY;
+
+/***/ }),
+/* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -107,7 +230,6 @@ function uniqueX(xs, ys) {
         if (i !== counter) {
             ys[counter] += ys[i];
         }
-
     }
 
     xs.length = counter + 1;
@@ -115,108 +237,6 @@ function uniqueX(xs, ys) {
 }
 
 module.exports = uniqueX;
-
-
-/***/ }),
-/* 1 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var uniqueXFunction = __webpack_require__(0);
-
-/**
- *
- * @param text
- * @param options
- * @param options.arrayType xxyy or xyxy
- * @param {boolean} options.normalize=false
- * @param {boolean} options.uniqueX
- * @param {number} [options.xColumn=0] - A number that specifies the xColumn
- * @param {number} [options.yColumn=1] - A number that specifies the yColumn
- * @param {number} [options.maxNumberColumns=(Math.max(xColumn, yColumn)+1 || 2)] - A number that specifies the yColumn
- * @param {number} [options.minNumberColumns=(Math.max(xColumn, yColumn)+1 || 2)] - A number that specifies the yColumn
- * @returns {*[]|Array}
- */
-
-function parseXY(text, options = {}) {
-    var _options$normalize = options.normalize;
-    let normalize = _options$normalize === undefined ? false : _options$normalize;
-    var _options$uniqueX = options.uniqueX;
-    let uniqueX = _options$uniqueX === undefined ? false : _options$uniqueX;
-    var _options$arrayType = options.arrayType;
-    let arrayType = _options$arrayType === undefined ? 'xyxy' : _options$arrayType;
-    var _options$xColumn = options.xColumn;
-    let xColumn = _options$xColumn === undefined ? 0 : _options$xColumn;
-    var _options$yColumn = options.yColumn;
-    let yColumn = _options$yColumn === undefined ? 1 : _options$yColumn,
-        maxNumberColumns = options.maxNumberColumns,
-        minNumberColumns = options.minNumberColumns;
-
-    if (!maxNumberColumns) maxNumberColumns = Math.max(xColumn, yColumn) + 1 || 2;
-    if (!minNumberColumns) minNumberColumns = Math.max(xColumn, yColumn) + 1 || 2;
-    var lines = text.split(/[\r\n]+/);
-
-    var maxY = Number.MIN_VALUE;
-
-    var counter = 0;
-    var xxyy = arrayType === 'xxyy' ? true : false;
-    if (xxyy) {
-        var result = [new Array(lines.length), new Array(lines.length)];
-    } else {
-        var result = new Array(lines.length);
-    }
-    for (var i = 0; i < lines.length; i++) {
-        var line = lines[i];
-        // we will consider only lines that contains only numbers
-        if (line.match(/[0-9]+/) && line.match(/^[0-9eE,;\. \t-]+$/)) {
-            line = line.trim();
-            var fields = line.split(/[,; \t]+/);
-            if (fields && fields.length >= minNumberColumns && fields.length <= maxNumberColumns) {
-                let x = parseFloat(fields[xColumn]);
-                let y = parseFloat(fields[yColumn]);
-
-                if (y > maxY) maxY = y;
-                if (xxyy) {
-                    result[0][counter] = x;
-                    result[1][counter++] = y;
-                } else {
-                    result[counter++] = [x, y];
-                }
-            }
-        }
-    }
-
-    if (xxyy) {
-        result[0].length = counter;
-        result[1].length = counter;
-    } else {
-        result.length = counter;
-    }
-
-    if (normalize) {
-        if (xxyy) {
-            for (var i = 0; i < counter; i++) {
-                result[1][i] /= maxY;
-            }
-        } else {
-            for (var i = 0; i < counter; i++) {
-                result[i][1] /= maxY;
-            }
-        }
-    }
-
-    if (uniqueX) {
-        if (!xxyy) throw new Error('Can only make unique X for xxyy format');
-        uniqueXFunction(result[0], result[1]);
-    }
-
-    return result;
-};
-
-parseXY.parse = parseXY; // keep compatibility
-module.exports = parseXY; // direct export
 
 /***/ })
 /******/ ]);
