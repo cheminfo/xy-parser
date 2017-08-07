@@ -1,102 +1,104 @@
-'use strict';
-
-var uniqueXFunction = require('ml-arrayxy-uniquex');
-
-const defaultOptions = {
-    normalize: false,
-    uniqueX: false,
-    arrayType: 'xyxy',
-    xColumn: 0,
-    yColumn: 1
-}
+import uniqueXFunction from 'ml-arrayxy-uniquex';
 
 /**
- *
- * @param text
- * @param options
- * @param options.arrayType xxyy or xyxy
- * @param {boolean} options.normalize=false
- * @param {boolean} options.uniqueX
- * @param {number} [options.xColumn=0] - A number that specifies the xColumn
- * @param {number} [options.yColumn=1] - A number that specifies the yColumn
- * @param {number} [options.maxNumberColumns=(Math.max(xColumn, yColumn)+1 || 2)] - A number that specifies the yColumn
- * @param {number} [options.minNumberColumns=(Math.max(xColumn, yColumn)+1 || 2)] - A number that specifies the yColumn
- * @returns {*[]|Array}
+ * Parse a text-file and convert it to an array of XY points
+ * @param {string} text - csv or tsv strings
+ * @param {object} [options]
+ * @param {string} [options.arrayType = 'xyxy'] - xxyy or xyxy
+ * * 'xxyy' `[[x1,x2,x3,...],[y1,y2,y2,...]]`
+ * * 'xyxy' `[[x1,y1],[x2,y2],[x3,y3], ...]]`
+ * @param {boolean} [options.normalize = false] - will set the maximum value to 1
+ * @param {boolean} [options.uniqueX = false] - Make the X values unique (works only with 'xxyy' format). If the X value is repeated the sum of Y is done.
+ * @param {number} [options.xColumn = 0] - A number that specifies the x column
+ * @param {number} [options.yColumn = 1] - A number that specifies the y column
+ * @param {number} [options.maxNumberColumns = (Math.max(xColumn, yColumn)+1)] - A number that specifies the maximum number of y columns
+ * @param {number} [options.minNumberColumns = (Math.max(xColumn, yColumn)+1)] - A number that specifies the minimum number of y columns
+ * @return {Array<Array<number>>} - check the 'arrayType' option
  */
-function parseXY (text, options) {
-    options = Object.assign({}, defaultOptions, options);
-    var normalize = options.normalize;
-    var uniqueX = options.uniqueX;
-    var arrayType = options.arrayType;
-    var xColumn = options.xColumn;
-    var yColumn = options.yColumn;
-    var maxNumberColumns = options.maxNumberColumns;
-    var minNumberColumns = options.minNumberColumns;
-    if (!maxNumberColumns) maxNumberColumns = (Math.max(xColumn, yColumn) + 1) || 2;
-    if (!minNumberColumns) minNumberColumns = (Math.max(xColumn, yColumn) + 1) || 2;
+export function parseXY(text, options = {}) {
+    const {
+        normalize = false,
+        uniqueX = false,
+        arrayType = 'xyxy',
+        xColumn = 0,
+        yColumn = 1,
+        maxNumberColumns = Math.max(xColumn, yColumn) + 1,
+        minNumberColumns = Math.max(xColumn, yColumn) + 1
+    } = options;
 
     var lines = text.split(/[\r\n]+/);
-    var maxY = Number.MIN_VALUE;
 
-    var counter = 0;
-    var xxyy = (arrayType === 'xxyy') ? true : false;
-    if (xxyy) {
-        var result = [
-            new Array(lines.length),
-            new Array(lines.length)
-        ];
-    } else {
-        var result = new Array(lines.length);
+    switch (arrayType) {
+        case 'xxyy':
+            return xxyy(lines, minNumberColumns, maxNumberColumns, xColumn, yColumn, normalize, uniqueX);
+        case 'xyxy':
+            return xyxy(lines, minNumberColumns, maxNumberColumns, xColumn, yColumn, normalize, uniqueX);
+        default:
+            throw new Error(`unsupported arrayType (${arrayType})`);
     }
-    for (var i = 0; i < lines.length; i++) {
-        var line = lines[i];
+}
+
+function xxyy(lines, minNumberColumns, maxNumberColumns, xColumn, yColumn, normalize, uniqueX) {
+    var maxY = Number.MIN_VALUE;
+    var result = [[], []];
+    for (var l = 0; l < lines.length; l++) {
+        var line = lines[l];
         // we will consider only lines that contains only numbers
-        if (line.match(/[0-9]+/) && line.match(/^[0-9eE,;\. \t-]+$/)) {
-            line=line.trim();
+        if (line.match(/[0-9]+/) && line.match(/^[0-9eE,;. \t-]+$/)) {
+            line = line.trim();
             var fields = line.split(/[,; \t]+/);
             if (fields && fields.length >= minNumberColumns && fields.length <= maxNumberColumns) {
                 let x = parseFloat(fields[xColumn]);
                 let y = parseFloat(fields[yColumn]);
 
                 if (y > maxY) maxY = y;
-                if (xxyy) {
-                    result[0][counter]=x;
-                    result[1][counter++]=y;
-                } else {
-                    result[counter++]=[x, y];
-                }
+                result[0].push(x);
+                result[1].push(y);
             }
         }
-    }
-
-    if (xxyy) {
-        result[0].length=counter;
-        result[1].length=counter;
-    } else {
-        result.length=counter;
     }
 
     if (normalize) {
-        if (xxyy) {
-            for (var i = 0; i < counter; i++) {
-                result[1][i] /= maxY;
-            }
-        } else {
-            for (var i = 0; i < counter; i++) {
-                result[i][1] /= maxY;
-            }
+        for (var i = 0; i < result[0].length; i++) {
+            result[1][i] /= maxY;
         }
-
     }
 
     if (uniqueX) {
-        if (! xxyy) throw new Error('Can only make unique X for xxyy format');
-        uniqueXFunction(result[0], result[1])
+        uniqueXFunction(result[0], result[1]);
     }
 
     return result;
-};
+}
 
+function xyxy(lines, minNumberColumns, maxNumberColumns, xColumn, yColumn, normalize, uniqueX) {
+    if (uniqueX) {
+        throw new Error('can only make unique X for xxyy format');
+    }
 
-parseXY.parse = parseXY; // keep compatibility
-module.exports = parseXY; // direct export
+    var maxY = Number.MIN_VALUE;
+    var result = [];
+    for (var l = 0; l < lines.length; l++) {
+        var line = lines[l];
+        // we will consider only lines that contains only numbers
+        if (line.match(/[0-9]+/) && line.match(/^[0-9eE,;. \t-]+$/)) {
+            line = line.trim();
+            var fields = line.split(/[,; \t]+/);
+            if (fields && fields.length >= minNumberColumns && fields.length <= maxNumberColumns) {
+                let x = parseFloat(fields[xColumn]);
+                let y = parseFloat(fields[yColumn]);
+
+                if (y > maxY) maxY = y;
+                result.push([x, y]);
+            }
+        }
+    }
+
+    if (normalize) {
+        for (var j = 0; j < result.length; j++) {
+            result[j][1] /= maxY;
+        }
+    }
+
+    return result;
+}

@@ -1,40 +1,35 @@
-# XY text file parser
+# xy-parser
 
   [![NPM version][npm-image]][npm-url]
   [![build status][travis-image]][travis-url]
-  [![David deps][david-image]][david-url]
+  [![Test coverage][codecov-image]][codecov-url]
   [![npm download][download-image]][download-url]
 
-XY file parser allows to convert a text file to an array of XY.
+Parse a text-file and convert it to an array of XY points.
 
-## Example of use:
+## Installation
+
+`$ npm install --save xy-parser`
+
+## Usage
 ```js
-var parseXY = require('xy-parser');
-var result = parseXY.parse('1 2\r3 4');
+import {parseXY} from 'xy-parser';
+const data = `1   2
+3   4
+5   6
+7   8`;
+const result = parseXY(data);
+/* result ->
+[
+    [ 1, 2 ],
+    [ 3, 4 ],
+    [ 5, 6 ],
+    [ 7, 8 ]
+]
+*/
 ```
 
-Or with options:
-
-```js
-var parseXY = require('xy-parser')
-var result = XYParser.parse(data,
-    {
-        uniqueX: true,
-        arrayType: 'xxyy',
-        normalize: true
-    }
-);
-```
-
-
-
-## Options
-
-* normalize: will set the maximal value to 1
-* arrayType:
-  * 'xxyy' `[[x1,x2,x3,...],[y1,y2,y2,...]]`
-  * 'xyxy' `[[x1,y1],[x2,y2],[x3,y3], ...]]` (default)
-* uniqueX: Make the X values unique (works only with xxyy format). If the X value is repeated the sum of Y is done.
+## [API Documentation](https://cheminfo-js.github.io/xy-parser/)
 
 ## License
 
@@ -44,7 +39,7 @@ var result = XYParser.parse(data,
 [npm-url]: https://www.npmjs.com/package/xy-parser
 [travis-image]: https://img.shields.io/travis/cheminfo-js/xy-parser/master.svg?style=flat-square
 [travis-url]: https://travis-ci.org/cheminfo-js/xy-parser
-[david-image]: https://img.shields.io/david/cheminfo-js/xy-parser.svg?style=flat-square
-[david-url]: https://david-dm.org/cheminfo-js/xy-parser
-[download-image]: https://img.shields.io/npm/dm/cheminfo-js/xy-parser.svg?style=flat-square
+[codecov-image]: https://img.shields.io/codecov/c/github/cheminfo-js/xy-parser.svg?style=flat-square
+[codecov-url]: https://codecov.io/gh/cheminfo-js/xy-parser
+[download-image]: https://img.shields.io/npm/dm/xy-parser.svg?style=flat-square
 [download-url]: https://www.npmjs.com/package/xy-parser
