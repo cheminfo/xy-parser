@@ -1,6 +1,6 @@
 /**
  * xy-parser - Parse a text-file and convert it to an array of XY points
- * @version v2.1.0
+ * @version v2.2.0
  * @link https://github.com/cheminfo-js/xy-parser#readme
  * @license MIT
  */
