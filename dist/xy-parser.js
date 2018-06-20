@@ -1,6 +1,6 @@
 /**
  * xy-parser - Parse a text-file and convert it to an array of XY points
- * @version v2.2.0
+ * @version v2.2.1
  * @link https://github.com/cheminfo-js/xy-parser#readme
  * @license MIT
  */
@@ -89,7 +89,7 @@ return /******/ (function(modules) { // webpackBootstrap
 Object.defineProperty(exports, '__esModule', { value: true });
 
 function _interopDefault(ex) {
-    return ex && typeof ex === 'object' && 'default' in ex ? ex['default'] : ex;
+  return ex && typeof ex === 'object' && 'default' in ex ? ex['default'] : ex;
 }
 
 var uniqueXFunction = _interopDefault(__webpack_require__(1));
@@ -111,78 +111,78 @@ var uniqueXFunction = _interopDefault(__webpack_require__(1));
  * @return {Array<Array<number>>} - check the 'arrayType' option
  */
 function parseXY(text, options = {}) {
-    var _options$normalize = options.normalize,
-        normalize = _options$normalize === undefined ? false : _options$normalize,
-        _options$uniqueX = options.uniqueX,
-        uniqueX = _options$uniqueX === undefined ? false : _options$uniqueX,
-        _options$arrayType = options.arrayType,
-        arrayType = _options$arrayType === undefined ? 'xyxy' : _options$arrayType,
-        _options$xColumn = options.xColumn,
-        xColumn = _options$xColumn === undefined ? 0 : _options$xColumn,
-        _options$yColumn = options.yColumn,
-        yColumn = _options$yColumn === undefined ? 1 : _options$yColumn,
-        _options$keepInfo = options.keepInfo,
-        keepInfo = _options$keepInfo === undefined ? false : _options$keepInfo,
-        _options$maxNumberCol = options.maxNumberColumns,
-        maxNumberColumns = _options$maxNumberCol === undefined ? Math.max(xColumn, yColumn) + 1 : _options$maxNumberCol,
-        _options$minNumberCol = options.minNumberColumns,
-        minNumberColumns = _options$minNumberCol === undefined ? Math.max(xColumn, yColumn) + 1 : _options$minNumberCol;
+  var _options$normalize = options.normalize,
+      normalize = _options$normalize === undefined ? false : _options$normalize,
+      _options$uniqueX = options.uniqueX,
+      uniqueX = _options$uniqueX === undefined ? false : _options$uniqueX,
+      _options$arrayType = options.arrayType,
+      arrayType = _options$arrayType === undefined ? 'xyxy' : _options$arrayType,
+      _options$xColumn = options.xColumn,
+      xColumn = _options$xColumn === undefined ? 0 : _options$xColumn,
+      _options$yColumn = options.yColumn,
+      yColumn = _options$yColumn === undefined ? 1 : _options$yColumn,
+      _options$keepInfo = options.keepInfo,
+      keepInfo = _options$keepInfo === undefined ? false : _options$keepInfo,
+      _options$maxNumberCol = options.maxNumberColumns,
+      maxNumberColumns = _options$maxNumberCol === undefined ? Math.max(xColumn, yColumn) + 1 : _options$maxNumberCol,
+      _options$minNumberCol = options.minNumberColumns,
+      minNumberColumns = _options$minNumberCol === undefined ? Math.max(xColumn, yColumn) + 1 : _options$minNumberCol;
 
 
-    var lines = text.split(/[\r\n]+/);
+  var lines = text.split(/[\r\n]+/);
 
-    if (arrayType !== 'xxyy' && arrayType !== 'xyxy') {
-        throw new Error(`unsupported arrayType (${arrayType})`);
+  if (arrayType !== 'xxyy' && arrayType !== 'xyxy') {
+    throw new Error(`unsupported arrayType (${arrayType})`);
+  }
+
+  var maxY = Number.MIN_VALUE;
+  var result = [[], []];
+  var info = [];
+  for (var l = 0; l < lines.length; l++) {
+    var line = lines[l].trim();
+    // we will consider only lines that contains only numbers
+    if (line.match(/[0-9]+/) && line.match(/^[0-9eE,;. \t-]+$/)) {
+      var fields = line.split(/,[; \t]+|[; \t]+/);
+      if (fields.length === 1) {
+        fields = line.split(/[,; \t]+/);
+      }
+      if (fields && fields.length >= minNumberColumns && fields.length <= maxNumberColumns) {
+        var x = parseFloat(fields[xColumn].replace(',', '.'));
+        var y = parseFloat(fields[yColumn].replace(',', '.'));
+
+        if (y > maxY) maxY = y;
+        result[0].push(x);
+        result[1].push(y);
+      }
+    } else if (line) {
+      info.push({ position: result[0].length, value: line });
     }
+  }
 
-    var maxY = Number.MIN_VALUE;
-    var result = [[], []];
-    var info = [];
-    for (var l = 0; l < lines.length; l++) {
-        var line = lines[l].trim();
-        // we will consider only lines that contains only numbers
-        if (line.match(/[0-9]+/) && line.match(/^[0-9eE,;. \t-]+$/)) {
-            var fields = line.split(/,[; \t]+|[; \t]+/);
-            if (fields.length === 1) {
-                fields = line.split(/[,; \t]+/);
-            }
-            if (fields && fields.length >= minNumberColumns && fields.length <= maxNumberColumns) {
-                var x = parseFloat(fields[xColumn].replace(',', '.'));
-                var y = parseFloat(fields[yColumn].replace(',', '.'));
-
-                if (y > maxY) maxY = y;
-                result[0].push(x);
-                result[1].push(y);
-            }
-        } else if (line) {
-            info.push({ position: result[0].length, value: line });
-        }
+  if (normalize) {
+    for (var i = 0; i < result[0].length; i++) {
+      result[1][i] /= maxY;
     }
+  }
 
-    if (normalize) {
-        for (var i = 0; i < result[0].length; i++) {
-            result[1][i] /= maxY;
-        }
+  if (uniqueX) {
+    uniqueXFunction(result[0], result[1]);
+  }
+
+  if (arrayType === 'xyxy') {
+    var newResult = [];
+    for (var _i = 0; _i < result[0].length; _i++) {
+      newResult.push([result[0][_i], result[1][_i]]);
     }
+    result = newResult;
+  }
 
-    if (uniqueX) {
-        uniqueXFunction(result[0], result[1]);
-    }
+  if (!keepInfo) return result;
 
-    if (arrayType === 'xyxy') {
-        var newResult = [];
-        for (var _i = 0; _i < result[0].length; _i++) {
-            newResult.push([result[0][_i], result[1][_i]]);
-        }
-        result = newResult;
-    }
-
-    if (!keepInfo) return result;
-
-    return {
-        info,
-        data: result
-    };
+  return {
+    info,
+    data: result
+  };
 }
 
 exports.parseXY = parseXY;
