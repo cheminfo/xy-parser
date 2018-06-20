@@ -41,14 +41,17 @@ export function parseXY(text, options = {}) {
         var line = lines[l].trim();
         // we will consider only lines that contains only numbers
         if (line.match(/[0-9]+/) && line.match(/^[0-9eE,;. \t-]+$/)) {
-            var fields = line.split(/[,; \t]+/);
+            var fields = line.split(/,[; \t]+|[; \t]+/);
+            if (fields.length === 1) {
+                fields = line.split(/[,; \t]+/);
+            }
             if (
                 fields &&
                 fields.length >= minNumberColumns &&
                 fields.length <= maxNumberColumns
             ) {
-                let x = parseFloat(fields[xColumn]);
-                let y = parseFloat(fields[yColumn]);
+                let x = parseFloat(fields[xColumn].replace(',', '.'));
+                let y = parseFloat(fields[yColumn].replace(',', '.'));
 
                 if (y > maxY) maxY = y;
                 result[0].push(x);

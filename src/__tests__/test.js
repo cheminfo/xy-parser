@@ -82,6 +82,15 @@ test('Test with some non numeric lines and keeping info', () => {
     });
 });
 
+test('Test with comma as decimal delimiter', () => {
+    var filename = 'text7.txt';
+    var data = readFileSync(path + filename).toString();
+    var result = parseXY(data, {
+        arrayType: 'xxyy'
+    });
+    expect(result).toEqual([[1.1, 2.2, 3.3], [1, 2, 3]]);
+});
+
 test('Errors', () => {
     var filename = 'text1.txt';
     var data = readFileSync(path + filename).toString();
