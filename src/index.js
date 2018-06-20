@@ -17,73 +17,73 @@ import uniqueXFunction from 'ml-arrayxy-uniquex';
  * @return {Array<Array<number>>} - check the 'arrayType' option
  */
 export function parseXY(text, options = {}) {
-    const {
-        normalize = false,
-        uniqueX = false,
-        arrayType = 'xyxy',
-        xColumn = 0,
-        yColumn = 1,
-        keepInfo = false,
-        maxNumberColumns = Math.max(xColumn, yColumn) + 1,
-        minNumberColumns = Math.max(xColumn, yColumn) + 1
-    } = options;
+  const {
+    normalize = false,
+    uniqueX = false,
+    arrayType = 'xyxy',
+    xColumn = 0,
+    yColumn = 1,
+    keepInfo = false,
+    maxNumberColumns = Math.max(xColumn, yColumn) + 1,
+    minNumberColumns = Math.max(xColumn, yColumn) + 1
+  } = options;
 
-    var lines = text.split(/[\r\n]+/);
+  var lines = text.split(/[\r\n]+/);
 
-    if (arrayType !== 'xxyy' && arrayType !== 'xyxy') {
-        throw new Error(`unsupported arrayType (${arrayType})`);
-    }
+  if (arrayType !== 'xxyy' && arrayType !== 'xyxy') {
+    throw new Error(`unsupported arrayType (${arrayType})`);
+  }
 
-    var maxY = Number.MIN_VALUE;
-    var result = [[], []];
-    var info = [];
-    for (var l = 0; l < lines.length; l++) {
-        var line = lines[l].trim();
-        // we will consider only lines that contains only numbers
-        if (line.match(/[0-9]+/) && line.match(/^[0-9eE,;. \t-]+$/)) {
-            var fields = line.split(/,[; \t]+|[; \t]+/);
-            if (fields.length === 1) {
-                fields = line.split(/[,; \t]+/);
-            }
-            if (
-                fields &&
+  var maxY = Number.MIN_VALUE;
+  var result = [[], []];
+  var info = [];
+  for (var l = 0; l < lines.length; l++) {
+    var line = lines[l].trim();
+    // we will consider only lines that contains only numbers
+    if (line.match(/[0-9]+/) && line.match(/^[0-9eE,;. \t-]+$/)) {
+      var fields = line.split(/,[; \t]+|[; \t]+/);
+      if (fields.length === 1) {
+        fields = line.split(/[,; \t]+/);
+      }
+      if (
+        fields &&
                 fields.length >= minNumberColumns &&
                 fields.length <= maxNumberColumns
-            ) {
-                let x = parseFloat(fields[xColumn].replace(',', '.'));
-                let y = parseFloat(fields[yColumn].replace(',', '.'));
+      ) {
+        let x = parseFloat(fields[xColumn].replace(',', '.'));
+        let y = parseFloat(fields[yColumn].replace(',', '.'));
 
-                if (y > maxY) maxY = y;
-                result[0].push(x);
-                result[1].push(y);
-            }
-        } else if (line) {
-            info.push({position: result[0].length, value: line});
-        }
+        if (y > maxY) maxY = y;
+        result[0].push(x);
+        result[1].push(y);
+      }
+    } else if (line) {
+      info.push({ position: result[0].length, value: line });
     }
+  }
 
-    if (normalize) {
-        for (var i = 0; i < result[0].length; i++) {
-            result[1][i] /= maxY;
-        }
+  if (normalize) {
+    for (var i = 0; i < result[0].length; i++) {
+      result[1][i] /= maxY;
     }
+  }
 
-    if (uniqueX) {
-        uniqueXFunction(result[0], result[1]);
+  if (uniqueX) {
+    uniqueXFunction(result[0], result[1]);
+  }
+
+  if (arrayType === 'xyxy') {
+    var newResult = [];
+    for (let i = 0; i < result[0].length; i++) {
+      newResult.push([result[0][i], result[1][i]]);
     }
+    result = newResult;
+  }
 
-    if (arrayType === 'xyxy') {
-        var newResult = [];
-        for (let i = 0; i < result[0].length; i++) {
-            newResult.push([result[0][i], result[1][i]]);
-        }
-        result = newResult;
-    }
+  if (!keepInfo) return result;
 
-    if (!keepInfo) return result;
-
-    return {
-        info,
-        data: result
-    };
+  return {
+    info,
+    data: result
+  };
 }
