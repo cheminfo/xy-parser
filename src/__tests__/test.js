@@ -53,15 +53,39 @@ test('Test with some spaces and taking second and third column', () => {
         xColumn: 1,
         yColumn: 2
     });
-
-    expect(result).toBeInstanceOf(Array);
     expect(result).toEqual([[1, 3, 5], [4, 6, 8]]);
+});
+
+test('Test with some non numeric lines', () => {
+    var filename = 'text6.txt';
+    var data = readFileSync(path + filename).toString();
+    var result = parseXY(data, {
+        arrayType: 'xxyy'
+    });
+    expect(result).toEqual([[1, 3, 5], [4, 6, 8]]);
+});
+
+test('Test with some non numeric lines and keeping info', () => {
+    var filename = 'text6.txt';
+    var data = readFileSync(path + filename).toString();
+    var result = parseXY(data, {
+        arrayType: 'xxyy',
+        keepInfo: true
+    });
+    expect(result).toEqual({
+        data: [[1, 3, 5], [4, 6, 8]],
+        info: [
+            {position: 0, value: 'This file as some header'},
+            {position: 0, value: 'and we should skip it'},
+            {position: 3, value: 'The end'}
+        ]
+    });
 });
 
 test('Errors', () => {
     var filename = 'text1.txt';
     var data = readFileSync(path + filename).toString();
-    expect(() => parseXY(data, {uniqueX: true, arrayType: 'xyxy'})).toThrow('can only make unique X for xxyy format');
-    expect(() => parseXY(data, {arrayType: 'bla'})).toThrow('unsupported arrayType (bla)');
+    expect(() => parseXY(data, {arrayType: 'bla'})).toThrow(
+        'unsupported arrayType (bla)'
+    );
 });
-

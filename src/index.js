@@ -13,6 +13,7 @@ import uniqueXFunction from 'ml-arrayxy-uniquex';
  * @param {number} [options.yColumn = 1] - A number that specifies the y column
  * @param {number} [options.maxNumberColumns = (Math.max(xColumn, yColumn)+1)] - A number that specifies the maximum number of y columns
  * @param {number} [options.minNumberColumns = (Math.max(xColumn, yColumn)+1)] - A number that specifies the minimum number of y columns
+ * @param {boolean} [options.keepInfo = false] - shoud we keep the non numeric lines. In this case the system will return an object {data, info}
  * @return {Array<Array<number>>} - check the 'arrayType' option
  */
 export function parseXY(text, options = {}) {
@@ -22,32 +23,30 @@ export function parseXY(text, options = {}) {
         arrayType = 'xyxy',
         xColumn = 0,
         yColumn = 1,
+        keepInfo = false,
         maxNumberColumns = Math.max(xColumn, yColumn) + 1,
         minNumberColumns = Math.max(xColumn, yColumn) + 1
     } = options;
 
     var lines = text.split(/[\r\n]+/);
 
-    switch (arrayType) {
-        case 'xxyy':
-            return xxyy(lines, minNumberColumns, maxNumberColumns, xColumn, yColumn, normalize, uniqueX);
-        case 'xyxy':
-            return xyxy(lines, minNumberColumns, maxNumberColumns, xColumn, yColumn, normalize, uniqueX);
-        default:
-            throw new Error(`unsupported arrayType (${arrayType})`);
+    if (arrayType !== 'xxyy' && arrayType !== 'xyxy') {
+        throw new Error(`unsupported arrayType (${arrayType})`);
     }
-}
 
-function xxyy(lines, minNumberColumns, maxNumberColumns, xColumn, yColumn, normalize, uniqueX) {
     var maxY = Number.MIN_VALUE;
     var result = [[], []];
+    var info = [];
     for (var l = 0; l < lines.length; l++) {
-        var line = lines[l];
+        var line = lines[l].trim();
         // we will consider only lines that contains only numbers
         if (line.match(/[0-9]+/) && line.match(/^[0-9eE,;. \t-]+$/)) {
-            line = line.trim();
             var fields = line.split(/[,; \t]+/);
-            if (fields && fields.length >= minNumberColumns && fields.length <= maxNumberColumns) {
+            if (
+                fields &&
+                fields.length >= minNumberColumns &&
+                fields.length <= maxNumberColumns
+            ) {
                 let x = parseFloat(fields[xColumn]);
                 let y = parseFloat(fields[yColumn]);
 
@@ -55,6 +54,8 @@ function xxyy(lines, minNumberColumns, maxNumberColumns, xColumn, yColumn, norma
                 result[0].push(x);
                 result[1].push(y);
             }
+        } else if (line) {
+            info.push({position: result[0].length, value: line});
         }
     }
 
@@ -68,37 +69,18 @@ function xxyy(lines, minNumberColumns, maxNumberColumns, xColumn, yColumn, norma
         uniqueXFunction(result[0], result[1]);
     }
 
-    return result;
-}
-
-function xyxy(lines, minNumberColumns, maxNumberColumns, xColumn, yColumn, normalize, uniqueX) {
-    if (uniqueX) {
-        throw new Error('can only make unique X for xxyy format');
-    }
-
-    var maxY = Number.MIN_VALUE;
-    var result = [];
-    for (var l = 0; l < lines.length; l++) {
-        var line = lines[l];
-        // we will consider only lines that contains only numbers
-        if (line.match(/[0-9]+/) && line.match(/^[0-9eE,;. \t-]+$/)) {
-            line = line.trim();
-            var fields = line.split(/[,; \t]+/);
-            if (fields && fields.length >= minNumberColumns && fields.length <= maxNumberColumns) {
-                let x = parseFloat(fields[xColumn]);
-                let y = parseFloat(fields[yColumn]);
-
-                if (y > maxY) maxY = y;
-                result.push([x, y]);
-            }
+    if (arrayType === 'xyxy') {
+        var newResult = [];
+        for (let i = 0; i < result[0].length; i++) {
+            newResult.push([result[0][i], result[1][i]]);
         }
+        result = newResult;
     }
 
-    if (normalize) {
-        for (var j = 0; j < result.length; j++) {
-            result[j][1] /= maxY;
-        }
-    }
+    if (!keepInfo) return result;
 
-    return result;
+    return {
+        info,
+        data: result
+    };
 }
