@@ -1,6 +1,6 @@
 /**
  * xy-parser - Parse a text-file and convert it to an array of XY points
- * @version v2.2.1
+ * @version v2.2.2
  * @link https://github.com/cheminfo-js/xy-parser#readme
  * @license MIT
  */
@@ -141,7 +141,7 @@ function parseXY(text, options = {}) {
   for (var l = 0; l < lines.length; l++) {
     var line = lines[l].trim();
     // we will consider only lines that contains only numbers
-    if (line.match(/[0-9]+/) && line.match(/^[0-9eE,;. \t-]+$/)) {
+    if (line.match(/[0-9]+/) && line.match(/^[0-9eE,;. \t+-]+$/)) {
       var fields = line.split(/,[; \t]+|[; \t]+/);
       if (fields.length === 1) {
         fields = line.split(/[,; \t]+/);
