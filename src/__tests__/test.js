@@ -106,6 +106,17 @@ test('Test with scientific notation', () => {
   });
 });
 
+
+test('Test large IV scientific notation file', () => {
+  var filename = 'text9.txt';
+  var data = readFileSync(path + filename).toString();
+  var result = parseXY(data, {
+    arrayType: 'xxyy'
+  });
+  expect(result[0]).toHaveLength(6472);
+  expect(result[1]).toHaveLength(6472);
+});
+
 test('Errors', () => {
   var filename = 'text1.txt';
   var data = readFileSync(path + filename).toString();
