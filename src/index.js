@@ -40,7 +40,7 @@ export function parseXY(text, options = {}) {
   for (var l = 0; l < lines.length; l++) {
     var line = lines[l].trim();
     // we will consider only lines that contains only numbers
-    if (line.match(/[0-9]+/) && line.match(/^[0-9eE,;. \t-]+$/)) {
+    if (line.match(/[0-9]+/) && line.match(/^[0-9eE,;. \t+-]+$/)) {
       var fields = line.split(/,[; \t]+|[; \t]+/);
       if (fields.length === 1) {
         fields = line.split(/[,; \t]+/);
