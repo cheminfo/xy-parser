@@ -83,6 +83,7 @@ test('Test with some non numeric lines and keeping info', () => {
   });
 });
 
+
 test('Test with comma as decimal delimiter', () => {
   var filename = 'text7.txt';
   var data = readFileSync(path + filename).toString();
@@ -90,6 +91,19 @@ test('Test with comma as decimal delimiter', () => {
     arrayType: 'xxyy'
   });
   expect(result).toEqual([[1.1, 2.2, 3.3], [1, 2, 3]]);
+});
+
+test('Test with scientific notation', () => {
+  var filename = 'text8.txt';
+  var data = readFileSync(path + filename).toString();
+  var result = parseXY(data, {
+    arrayType: 'xxyy',
+    keepInfo: true
+  });
+  expect(result).toEqual({
+    data: [[0.11, -11, 0.11], [0.22, -22, 0.22]],
+    info: [{ position: 0, value: 'Ewe/V <I>/mA' }],
+  });
 });
 
 test('Errors', () => {
