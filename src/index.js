@@ -12,21 +12,24 @@ import uniqueXFunction from 'ml-arrayxy-uniquex';
  * @param {number} [options.xColumn = 0] - A number that specifies the x column
  * @param {number} [options.yColumn = 1] - A number that specifies the y column
  * @param {number} [options.maxNumberColumns = (Math.max(xColumn, yColumn)+1)] - A number that specifies the maximum number of y columns
- * @param {number} [options.minNumberColumns = (Math.max(xColumn, yColumn)+1)] - A number that specifies the minimum number of y columns
+ * @param {number} [options.minNumberColumns = (Math.min(xColumn, yColumn)+1)] - A number that specifies the minimum number of y columns
  * @param {boolean} [options.keepInfo = false] - shoud we keep the non numeric lines. In this case the system will return an object {data, info}
  * @return {Array<Array<number>>} - check the 'arrayType' option
  */
 export function parseXY(text, options = {}) {
-  const {
+  let {
     normalize = false,
     uniqueX = false,
     arrayType = 'xyxy',
     xColumn = 0,
     yColumn = 1,
     keepInfo = false,
-    maxNumberColumns = Math.max(xColumn, yColumn) + 1,
-    minNumberColumns = Math.max(xColumn, yColumn) + 1
+    maxNumberColumns = Number.MAX_SAFE_INTEGER,
+    minNumberColumns = 2
   } = options;
+
+  maxNumberColumns = Math.max(maxNumberColumns, xColumn + 1, yColumn + 1);
+  minNumberColumns = Math.max(xColumn + 1, yColumn + 1, minNumberColumns);
 
   var lines = text.split(/[\r\n]+/);
 
@@ -47,8 +50,8 @@ export function parseXY(text, options = {}) {
       }
       if (
         fields &&
-                fields.length >= minNumberColumns &&
-                fields.length <= maxNumberColumns
+        fields.length >= minNumberColumns &&
+        fields.length <= maxNumberColumns
       ) {
         let x = parseFloat(fields[xColumn].replace(',', '.'));
         let y = parseFloat(fields[yColumn].replace(',', '.'));
