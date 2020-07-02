@@ -20,7 +20,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/cheminfo-js/xy-parser.git"
+    "url": "git+https://github.com/cheminfo/xy-parser.git"
   },
   "keywords": [
     "xy file parser",
@@ -29,9 +29,9 @@
   "author": "Luc Patiny",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/cheminfo-js/xy-parser/issues"
+    "url": "https://github.com/cheminfo/xy-parser/issues"
   },
-  "homepage": "https://github.com/cheminfo-js/xy-parser#readme",
+  "homepage": "https://github.com/cheminfo/xy-parser#readme",
   "jest": {
     "testEnvironment": "node"
   },
