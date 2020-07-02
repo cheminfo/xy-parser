@@ -37,7 +37,7 @@ test('text3', () => {
   expect(result).toStrictEqual({ x: [1, 2, 3], y: [3, 3, 9] });
 });
 
-test('Test with some spaces', () => {
+test('with some spaces', () => {
   let filename = 'text4.txt';
   let data = readFileSync(path + filename).toString();
   let result = parseXY(data, {
@@ -48,7 +48,7 @@ test('Test with some spaces', () => {
   expect(result).toStrictEqual({ x: [1, 2, 3], y: [3, 3, 9] });
 });
 
-test('Test with some spaces and taking second and third column', () => {
+test('with some spaces and taking second and third column', () => {
   let filename = 'text5.txt';
   let data = readFileSync(path + filename).toString();
   let result = parseXY(data, {
@@ -58,14 +58,14 @@ test('Test with some spaces and taking second and third column', () => {
   expect(result).toStrictEqual({ x: [1, 3, 5], y: [4, 6, 8] });
 });
 
-test('Test with some non numeric lines', () => {
+test('with some non numeric lines', () => {
   let filename = 'text6.txt';
   let data = readFileSync(path + filename).toString();
   let result = parseXY(data, {});
   expect(result).toStrictEqual({ x: [1, 3, 5], y: [4, 6, 8] });
 });
 
-test('Test with some non numeric lines and keeping info', () => {
+test('with some non numeric lines and keeping info', () => {
   let filename = 'text6.txt';
   let data = readFileSync(path + filename).toString();
   let result = parseXY(data, {
@@ -81,14 +81,14 @@ test('Test with some non numeric lines and keeping info', () => {
   });
 });
 
-test('Test with comma as decimal delimiter', () => {
+test('with comma as decimal delimiter', () => {
   let filename = 'text7.txt';
   let data = readFileSync(path + filename).toString();
   let result = parseXY(data, {});
   expect(result).toStrictEqual({ x: [1.1, 2.2, 3.3], y: [1, 2, 3] });
 });
 
-test('Test with scientific notation', () => {
+test('with scientific notation', () => {
   let filename = 'text8.txt';
   let data = readFileSync(path + filename).toString();
   let result = parseXY(data, {
@@ -100,7 +100,7 @@ test('Test with scientific notation', () => {
   });
 });
 
-test('Test large IV scientific notation file', () => {
+test('large IV scientific notation file', () => {
   let filename = 'text9.txt';
   let data = readFileSync(path + filename).toString();
   let result = parseXY(data, {});
