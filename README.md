@@ -1,7 +1,6 @@
 # xy-parser
 
 [![NPM version][npm-image]][npm-url]
-[![build status][travis-image]][travis-url]
 [![Test coverage][codecov-image]][codecov-url]
 [![npm download][download-image]][download-url]
 
@@ -58,8 +57,6 @@ column on two is a monotone series we will parse it correctly.
 
 [npm-image]: https://img.shields.io/npm/v/xy-parser.svg?style=flat-square
 [npm-url]: https://www.npmjs.com/package/xy-parser
-[travis-image]: https://img.shields.io/travis/cheminfo/xy-parser/master.svg?style=flat-square
-[travis-url]: https://travis-ci.org/cheminfo/xy-parser
 [codecov-image]: https://img.shields.io/codecov/c/github/cheminfo/xy-parser.svg?style=flat-square
 [codecov-url]: https://codecov.io/gh/cheminfo/xy-parser
 [download-image]: https://img.shields.io/npm/dm/xy-parser.svg?style=flat-square

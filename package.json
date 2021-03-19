@@ -9,13 +9,13 @@
     "src"
   ],
   "scripts": {
-    "build": "rollup -c && cheminfo-build",
+    "build": "rollup -c && cheminfo-build --root XYParser",
     "build-doc": "cheminfo doc",
     "eslint": "eslint src",
     "eslint-fix": "npm run eslint -- --fix",
     "prepublishOnly": "rollup -c",
     "test": "npm run testonly && npm run eslint",
-    "test-travis": "eslint src && jest --coverage && codecov",
+    "test-coverage": "jest --coverage",
     "testonly": "jest"
   },
   "repository": {
