@@ -1,5 +1,12 @@
 # Changelog
 
+### [3.1.1](https://www.github.com/cheminfo/xy-parser/compare/v3.1.0...v3.1.1) (2021-03-19)
+
+
+### Bug Fixes
+
+* remove travis and add test-coverage ([b34e3a9](https://www.github.com/cheminfo/xy-parser/commit/b34e3a9b1dc2994dea3a53d9127040f5d1baecf6))
+
 ## [3.1.0](https://github.com/cheminfo/xy-parser/compare/v3.0.0...v3.1.0) (2021-03-19)
 
 
