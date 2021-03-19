@@ -42,6 +42,14 @@ const result2 = parseXY(data, { keepInfo: true });
 */
 ```
 
+The `bestGuess` option will try to determine which columns should be used.
+
+If there are 3 columns and the first column is a sequential number starting at '1' it looks 
+like this is a line number, we will ignore it.
+
+If there are many columns maybe we have a format like X1, Y1, X2, Y2, ... in this cases if one
+column on two is a monotone series we will parse it correctly.
+
 ## [API Documentation](https://cheminfo.github.io/xy-parser/)
 
 ## License
