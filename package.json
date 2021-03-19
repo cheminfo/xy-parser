@@ -36,6 +36,7 @@
     "testEnvironment": "node"
   },
   "devDependencies": {
+    "@types/jest": "^26.0.21",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
     "cheminfo-build": "^1.1.10",
     "cheminfo-tools": "^1.23.3",
@@ -53,6 +54,8 @@
     "rollup-plugin-node-resolve": "^5.2.0"
   },
   "dependencies": {
-    "ml-arrayxy-uniquex": "1.0.2"
+    "ml-array-max": "^1.2.2",
+    "ml-arrayxy-uniquex": "1.0.2",
+    "ml-spectra-processing": "^5.8.0"
   }
 }
