@@ -1,10 +1,21 @@
 # xy-parser
-
-[![NPM version][npm-image]][npm-url]
-[![Test coverage][codecov-image]][codecov-url]
-[![npm download][download-image]][download-url]
-
 Parse a text-file and convert it to an array of XY points.
+
+<h3 align="center">
+
+  <a href="https://www.zakodium.com">
+    <img src="https://www.zakodium.com/brand/zakodium-logo-white.svg" width="50" alt="Zakodium logo" />
+  </a>
+
+  <p>
+    Maintained by <a href="https://www.zakodium.com">Zakodium</a>
+  </p>
+
+  [![NPM version][npm-image]][npm-url]
+  [![Test coverage][codecov-image]][codecov-url]
+  [![npm download][download-image]][download-url]
+
+</h3>
 
 ## Installation
 
