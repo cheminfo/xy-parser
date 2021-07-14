@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.2.0](https://www.github.com/cheminfo/xy-parser/compare/v3.1.1...v3.2.0) (2021-07-14)
+
+
+### Features
+
+* automatically convert arrayBuffer to text ([aa2e6d4](https://www.github.com/cheminfo/xy-parser/commit/aa2e6d41f16360240cda56e5ef15a5b735a2f9ef))
+
 ### [3.1.1](https://www.github.com/cheminfo/xy-parser/compare/v3.1.0...v3.1.1) (2021-03-19)
 
 
