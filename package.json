@@ -54,6 +54,7 @@
     "rollup-plugin-node-resolve": "^5.2.0"
   },
   "dependencies": {
+    "ensure-string": "^0.1.1",
     "ml-array-max": "^1.2.3",
     "ml-arrayxy-uniquex": "1.0.2",
     "ml-spectra-processing": "^6.7.1"
