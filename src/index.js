@@ -1,6 +1,8 @@
-import mlArrayMax from 'ml-array-max';
-import uniqueXFunction from 'ml-arrayxy-uniquex';
-import { xIsMonotone } from 'ml-spectra-processing';
+import { ensureString } from "ensure-string";
+import mlArrayMax from "ml-array-max";
+import uniqueXFunction from "ml-arrayxy-uniquex";
+import { xIsMonotone } from "ml-spectra-processing";
+
 /**
  * Parse a text-file and convert it to an array of XY points
  * @param {string} text - csv or tsv strings
@@ -29,6 +31,8 @@ export function parseXY(text, options = {}) {
     minNumberColumns = 2,
   } = options;
 
+  text = ensureString(text);
+
   maxNumberColumns = Math.max(maxNumberColumns, xColumn + 1, yColumn + 1);
   minNumberColumns = Math.max(xColumn + 1, yColumn + 1, minNumberColumns);
 
@@ -50,7 +54,7 @@ export function parseXY(text, options = {}) {
         fields.length >= minNumberColumns && // we filter lines that have not enough or too many columns
         fields.length <= maxNumberColumns
       ) {
-        matrix.push(fields.map((value) => parseFloat(value.replace(',', '.'))));
+        matrix.push(fields.map((value) => parseFloat(value.replace(",", "."))));
         position++;
       }
     } else if (line) {
