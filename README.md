@@ -15,6 +15,7 @@ Parse a text-file and convert it to an array of XY points.
   [![NPM version][npm-image]][npm-url]
   [![Test coverage][codecov-image]][codecov-url]
   [![npm download][download-image]][download-url]
+  [![DOI](https://www.zenodo.org/badge/35540080.svg)](https://www.zenodo.org/badge/latestdoi/35540080)
 
 </h3>
 
