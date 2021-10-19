@@ -15,7 +15,7 @@ import { xIsMonotone } from "ml-spectra-processing";
  * @param {number} [options.numberColumns=Number.MAX_SAFE_INTEGER] If the file has 10 columns and you specify here 2 it will reflow the file
  * @param {number} [options.maxNumberColumns = (Math.max(xColumn, yColumn)+1)] - A number that specifies the maximum number of y columns
  * @param {number} [options.minNumberColumns = (Math.min(xColumn, yColumn)+1)] - A number that specifies the minimum number of y columns
- * @param {boolean} [options.keepInfo = false] - shoud we keep the non numeric lines. In this case the system will return an object {data, info}
+ * @param {boolean} [options.keepInfo = false] - should we keep the non numeric lines. In this case the system will return an object {data, info}
  * @return {object{x:<Array<number>>,y:<Array<number>>}
  */
 export function parseXY(text, options = {}) {
