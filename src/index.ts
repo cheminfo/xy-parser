@@ -108,7 +108,7 @@ export function parseXY(
       }
     }
     if (matrix[0] && matrix[0].length > 3) {
-      let xs = [];
+      let xs: number[] = [];
       for (let row of matrix) {
         for (let i = xColumn; i < row.length; i += 2) {
           xs.push(row[i]);
@@ -121,7 +121,7 @@ export function parseXY(
   }
 
   if (numberColumns) {
-    const newMatrix = [];
+    const newMatrix: number[][] = [];
     for (const row of matrix) {
       for (let i = 0; i < row.length; i += numberColumns) {
         newMatrix.push(row.slice(i, i + numberColumns));
