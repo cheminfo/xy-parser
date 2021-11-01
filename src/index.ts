@@ -1,12 +1,30 @@
 import { ensureString } from "ensure-string";
 import mlArrayMax from "ml-array-max";
-import uniqueXFunction from "ml-arrayxy-uniquex";
-import { xIsMonotone } from "ml-spectra-processing";
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const uniqueXFunction = require("ml-arrayxy-uniquex");
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const { xIsMonotone } = require("ml-spectra-processing");
+
+export interface DataXY {
+  x: number[];
+  y: number[];
+}
+export interface ParseXYOptions {
+  rescale?: boolean;
+  uniqueX?: boolean;
+  xColumn?: number;
+  yColumn?: number;
+  keepInfo?: boolean;
+  bestGuess?: boolean;
+  numberColumns?: number;
+  maxNumberColumns?: number;
+  minNumberColumns?: number;
+}
 /**
  * Parse a text-file and convert it to an array of XY points
  * @param {string} text - csv or tsv strings
- * @param {object} [options={}]
+ * @param {ParseXYOptions} [options={}]
  * @param {boolean} [options.rescale = false] - will set the maximum value to 1
  * @param {boolean} [options.uniqueX = false] - Make the X values unique (works only with 'xxyy' format). If the X value is repeated the sum of Y is done.
  * @param {number} [options.xColumn = 0] - A number that specifies the x column
@@ -16,9 +34,17 @@ import { xIsMonotone } from "ml-spectra-processing";
  * @param {number} [options.maxNumberColumns = (Math.max(xColumn, yColumn)+1)] - A number that specifies the maximum number of y columns
  * @param {number} [options.minNumberColumns = (Math.min(xColumn, yColumn)+1)] - A number that specifies the minimum number of y columns
  * @param {boolean} [options.keepInfo = false] - should we keep the non numeric lines. In this case the system will return an object {data, info}
- * @return {object{x:<Array<number>>,y:<Array<number>>}
+ * @return {{x:number[],y:number[]}} -
  */
-export function parseXY(text, options = {}) {
+export function parseXY(
+  text: string,
+  options: ParseXYOptions = {}
+):
+  | {
+      info: { position: number; value: string }[];
+      data: DataXY;
+    }
+  | DataXY {
   let {
     rescale = false,
     uniqueX = false,
@@ -38,14 +64,14 @@ export function parseXY(text, options = {}) {
 
   let lines = text.split(/[\r\n]+/);
 
-  let matrix = [];
-  let info = [];
+  let matrix: number[][] = [];
+  let info: { position: number; value: string }[] = [];
   let position = 0;
-  for (let l = 0; l < lines.length; l++) {
-    let line = lines[l].trim();
+  lines.forEach((line) => {
+    line = line.trim();
     // we will consider only lines that contains only numbers
-    if (line.match(/[0-9]+/) && line.match(/^[0-9eE,;. \t+-]+$/)) {
-      let fields = line.split(/,[; \t]+|[; \t]+/);
+    if (/[0-9]+/.exec(line) && /^[0-9eE,;. \t+-]+$/.exec(line)) {
+      let fields: string[] = line.split(/,[; \t]+|[; \t]+/);
       if (fields.length === 1) {
         fields = line.split(/[,; \t]+/);
       }
@@ -60,7 +86,7 @@ export function parseXY(text, options = {}) {
     } else if (line) {
       info.push({ position, value: line });
     }
-  }
+  });
 
   if (bestGuess) {
     if (

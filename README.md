@@ -12,10 +12,10 @@ Parse a text-file and convert it to an array of XY points.
     Maintained by <a href="https://www.zakodium.com">Zakodium</a>
   </p>
 
-  [![NPM version][npm-image]][npm-url]
-  [![Test coverage][codecov-image]][codecov-url]
-  [![npm download][download-image]][download-url]
-  [![DOI](https://www.zenodo.org/badge/35540080.svg)](https://www.zenodo.org/badge/latestdoi/35540080)
+[![NPM version][npm-image]][npm-url]
+[![Test coverage][codecov-image]][codecov-url]
+[![npm download][download-image]][download-url]
+[![DOI](https://www.zenodo.org/badge/35540080.svg)](https://www.zenodo.org/badge/latestdoi/35540080)
 
 </h3>
 
@@ -56,7 +56,7 @@ const result2 = parseXY(data, { keepInfo: true });
 
 The `bestGuess` option will try to determine which columns should be used.
 
-If there are 3 columns and the first column is a sequential number starting at '1' it looks 
+If there are 3 columns and the first column is a sequential number starting at '1' it looks
 like this is a line number, we will ignore it.
 
 If there are many columns maybe we have a format like X1, Y1, X2, Y2, ... in this cases if one
