@@ -1,10 +1,7 @@
 import { ensureString } from "ensure-string";
 import mlArrayMax from "ml-array-max";
-
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const uniqueXFunction = require("ml-arrayxy-uniquex");
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const { xIsMonotone } = require("ml-spectra-processing");
+import uniqueXFunction from "ml-arrayxy-uniquex";
+import { xIsMonotone } from "ml-spectra-processing";
 
 export interface DataXY {
   x: number[];
