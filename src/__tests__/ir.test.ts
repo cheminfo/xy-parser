@@ -1,6 +1,6 @@
 import { readFileSync } from "fs";
 
-import { DataXY, parseXY } from "..";
+import { DataXY, parseXY } from "../index";
 
 const path = `${__dirname}/../../testFiles/`;
 

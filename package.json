@@ -46,7 +46,7 @@
     "cheminfo-tools": "^1.23.3",
     "codecov": "^3.8.3",
     "eslint": "^8.1.0",
-    "eslint-config-cheminfo-typescript": "^10.1.1",
+    "eslint-config-cheminfo-typescript": "^10.2.1",
     "eslint-plugin-import": "^2.25.2",
     "eslint-plugin-jest": "^25.2.2",
     "eslint-plugin-no-only-tests": "^2.6.0",

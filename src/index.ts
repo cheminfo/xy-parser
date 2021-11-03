@@ -1,7 +1,10 @@
 import { ensureString } from "ensure-string";
 import mlArrayMax from "ml-array-max";
-import uniqueXFunction from "ml-arrayxy-uniquex";
-import { xIsMonotone } from "ml-spectra-processing";
+
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const uniqueXFunction = require("ml-arrayxy-uniquex");
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const { xIsMonotone } = require("ml-spectra-processing");
 
 export interface DataXY {
   x: number[];
@@ -19,19 +22,20 @@ export interface ParseXYOptions {
   minNumberColumns?: number;
 }
 /**
- * Parse a text-file and convert it to an array of XY points
- * @param {string} text - csv or tsv strings
- * @param {ParseXYOptions} [options={}]
- * @param {boolean} [options.rescale = false] - will set the maximum value to 1
- * @param {boolean} [options.uniqueX = false] - Make the X values unique (works only with 'xxyy' format). If the X value is repeated the sum of Y is done.
- * @param {number} [options.xColumn = 0] - A number that specifies the x column
- * @param {number} [options.yColumn = 1] - A number that specifies the y column
- * @param {boolean} [options.bestGuess=false] Will try to guess which columns are the best
- * @param {number} [options.numberColumns=Number.MAX_SAFE_INTEGER] If the file has 10 columns and you specify here 2 it will reflow the file
- * @param {number} [options.maxNumberColumns = (Math.max(xColumn, yColumn)+1)] - A number that specifies the maximum number of y columns
- * @param {number} [options.minNumberColumns = (Math.min(xColumn, yColumn)+1)] - A number that specifies the minimum number of y columns
- * @param {boolean} [options.keepInfo = false] - should we keep the non numeric lines. In this case the system will return an object {data, info}
- * @return {{x:number[],y:number[]}} -
+ * Parse a text-file and convert it to an array of XY points.
+ *
+ * @param text - Csv or tsv strings.
+ * @param [options={}] -
+ * @param [options.rescale = false] - Will set the maximum value to 1.
+ * @param [options.uniqueX = false] - Make the X values unique (works only with 'xxyy' format). If the X value is repeated the sum of Y is done.
+ * @param [options.xColumn = 0] - A number that specifies the x column.
+ * @param [options.yColumn = 1] - A number that specifies the y column.
+ * @param [options.bestGuess=false] - Will try to guess which columns are the best.
+ * @param [options.numberColumns=Number.MAX_SAFE_INTEGER] - If the file has 10 columns and you specify here 2 it will reflow the file.
+ * @param [options.maxNumberColumns = (Math.max(xColumn, yColumn)+1)] - A number that specifies the maximum number of y columns.
+ * @param [options.minNumberColumns = (Math.min(xColumn, yColumn)+1)] - A number that specifies the minimum number of y columns.
+ * @param [options.keepInfo = false] - Should we keep the non numeric lines. In this case the system will return an object {data, info}.
+ * @returns -
  */
 export function parseXY(
   text: string,
