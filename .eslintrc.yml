@@ -1,5 +1,4 @@
-extends: cheminfo-typescript
+plugins: [jsdoc]
+extends: [cheminfo-typescript, cheminfo-typescript/jsdoc]
 parserOptions:
   sourceType: module
-env:
-  jest: true
