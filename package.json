@@ -20,7 +20,7 @@
     "prepack": "npm run tsc",
     "test": "npm run testonly && npm run eslint && npm run check-types",
     "test-coverage": "jest --coverage",
-    "testonly": "jest",
+    "test-only": "jest",
     "tsc": "npm run clean && npm run tsc-cjs && npm run tsc-esm",
     "tsc-cjs": "tsc --project tsconfig.cjs.json",
     "tsc-esm": "tsc --project tsconfig.esm.json"
