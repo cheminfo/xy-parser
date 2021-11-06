@@ -1,10 +1,10 @@
-import { ensureString } from "ensure-string";
-import mlArrayMax from "ml-array-max";
+import { ensureString } from 'ensure-string';
+import mlArrayMax from 'ml-array-max';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-const uniqueXFunction = require("ml-arrayxy-uniquex");
+const uniqueXFunction = require('ml-arrayxy-uniquex');
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-const { xIsMonotone } = require("ml-spectra-processing");
+const { xIsMonotone } = require('ml-spectra-processing');
 
 export interface DataXY {
   x: number[];
@@ -39,7 +39,7 @@ export interface ParseXYOptions {
  */
 export function parseXY(
   text: string,
-  options: ParseXYOptions = {}
+  options: ParseXYOptions = {},
 ):
   | {
       info: { position: number; value: string }[];
@@ -71,8 +71,8 @@ export function parseXY(
   lines.forEach((line) => {
     line = line.trim();
     // we will consider only lines that contains only numbers
-    if (/[0-9]+/.exec(line) && /^[0-9eE,;. \t+-]+$/.exec(line)) {
-      let fields: string[] = line.split(/,[; \t]+|[; \t]+/);
+    if (/[0-9]+/.test(line) && /^[0-9eE,;. \t+-]+$/.test(line)) {
+      let fields = line.split(/,[; \t]+|[; \t]+/);
       if (fields.length === 1) {
         fields = line.split(/[,; \t]+/);
       }
@@ -81,7 +81,7 @@ export function parseXY(
         fields.length >= minNumberColumns && // we filter lines that have not enough or too many columns
         fields.length <= maxNumberColumns
       ) {
-        matrix.push(fields.map((value) => parseFloat(value.replace(",", "."))));
+        matrix.push(fields.map((value) => parseFloat(value.replace(',', '.'))));
         position++;
       }
     } else if (line) {
@@ -109,7 +109,7 @@ export function parseXY(
       }
     }
     if (matrix[0] && matrix[0].length > 3) {
-      let xs: number[] = [];
+      const xs: number[] = [];
       for (let row of matrix) {
         for (let i = xColumn; i < row.length; i += 2) {
           xs.push(row[i]);
