@@ -44,7 +44,6 @@
   "devDependencies": {
     "@types/jest": "^27.0.2",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
-    "cheminfo-build": "^1.1.11",
     "cheminfo-tools": "^1.23.3",
     "codecov": "^3.8.3",
     "eslint": "^8.1.0",
