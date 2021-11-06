@@ -1,11 +1,11 @@
-import { readFileSync } from "fs";
+import { readFileSync } from 'fs';
 
-import { DataXY, parseXY } from "..";
+import { DataXY, parseXY } from '..';
 
 const path = `${__dirname}/../../testFiles/`;
 
-test("uv.csv", () => {
-  let filename = "uv.csv";
+test('uv.csv', () => {
+  let filename = 'uv.csv';
   let data = readFileSync(path + filename).toString();
 
   let result = parseXY(data) as DataXY;

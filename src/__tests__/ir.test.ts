@@ -1,11 +1,11 @@
-import { readFileSync } from "fs";
+import { readFileSync } from 'fs';
 
-import { DataXY, parseXY } from "../index";
+import { DataXY, parseXY } from '../index';
 
 const path = `${__dirname}/../../testFiles/`;
 
-test("ir.asc", () => {
-  let filename = "ir.asc";
+test('ir.asc', () => {
+  let filename = 'ir.asc';
   let data = readFileSync(path + filename).toString();
 
   let result = parseXY(data) as DataXY;
@@ -15,8 +15,8 @@ test("ir.asc", () => {
   expect(result.y).toHaveLength(3401);
 });
 
-test("ir2.asc", () => {
-  let filename = "ir2.asc";
+test('ir2.asc', () => {
+  let filename = 'ir2.asc';
   let data = readFileSync(path + filename).toString();
 
   let result = parseXY(data) as DataXY;

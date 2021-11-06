@@ -1,12 +1,12 @@
-import { readFileSync } from "fs";
+import { readFileSync } from 'fs';
 
-import { DataXY, parseXY } from "..";
+import { DataXY, parseXY } from '..';
 
 const path = `${__dirname}/../../testFiles/`;
 
-describe("Test mass spectra", () => {
-  it("mass1.txt", () => {
-    let filename = "mass1.txt";
+describe('Test mass spectra', () => {
+  it('mass1.txt', () => {
+    let filename = 'mass1.txt';
     let data = readFileSync(path + filename).toString();
 
     let result = parseXY(data) as DataXY;
@@ -22,8 +22,8 @@ describe("Test mass spectra", () => {
     expect(result2.y[0]).toBe(451);
   });
 
-  it("mass2.csv", () => {
-    let filename = "mass2.csv";
+  it('mass2.csv', () => {
+    let filename = 'mass2.csv';
     let data = readFileSync(path + filename).toString();
 
     let result = parseXY(data, { xColumn: 1, yColumn: 2 }) as DataXY;
@@ -39,8 +39,8 @@ describe("Test mass spectra", () => {
     expect(result2.y[1]).toBe(0.772047996520996);
   });
 
-  it("mass3.asc", () => {
-    let filename = "mass3.asc";
+  it('mass3.asc', () => {
+    let filename = 'mass3.asc';
     let data = readFileSync(path + filename).toString();
 
     let result = parseXY(data) as DataXY;
@@ -56,8 +56,8 @@ describe("Test mass spectra", () => {
     expect(result2.y[1]).toBe(755580);
   });
 
-  it("mass4.spectrum", () => {
-    let filename = "mass4.spectrum";
+  it('mass4.spectrum', () => {
+    let filename = 'mass4.spectrum';
     let data = readFileSync(path + filename).toString();
     let result = parseXY(data, { numberColumns: 2 }) as DataXY;
     expect(result.x).toHaveLength(34);
