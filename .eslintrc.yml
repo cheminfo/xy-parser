@@ -1,5 +1,4 @@
-extends: 'eslint-config-cheminfo'
+plugins: [jsdoc]
+extends: [cheminfo-typescript, cheminfo-typescript/jsdoc]
 parserOptions:
   sourceType: module
-env:
-  jest: true

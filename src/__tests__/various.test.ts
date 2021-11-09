@@ -1,13 +1,13 @@
 import { readFileSync } from 'fs';
 
-import { parseXY } from '..';
+import { DataXY, parseXY } from '..';
 
 const path = `${__dirname}/../../testFiles/`;
 
 test('text1', () => {
   let filename = 'text1.txt';
   let data = readFileSync(path + filename).toString();
-  let result = parseXY(data);
+  let result = parseXY(data) as DataXY;
 
   expect(result.x).toBeInstanceOf(Array);
   expect(result.y).toBeInstanceOf(Array);
@@ -18,7 +18,7 @@ test('text1', () => {
 test('text2', () => {
   let filename = 'text2.txt';
   let data = readFileSync(path + filename).toString();
-  let result = parseXY(data);
+  let result = parseXY(data) as DataXY;
 
   expect(result.x).toBeInstanceOf(Array);
   expect(result.y).toBeInstanceOf(Array);
@@ -31,7 +31,7 @@ test('text3', () => {
   let data = readFileSync(path + filename).toString();
   let result = parseXY(data, {
     uniqueX: true,
-  });
+  }) as DataXY;
 
   expect(result.x).toBeInstanceOf(Array);
   expect(result).toStrictEqual({ x: [1, 2, 3], y: [3, 3, 9] });
@@ -42,7 +42,7 @@ test('with some spaces', () => {
   let data = readFileSync(path + filename).toString();
   let result = parseXY(data, {
     uniqueX: true,
-  });
+  }) as DataXY;
 
   expect(result.x).toBeInstanceOf(Array);
   expect(result).toStrictEqual({ x: [1, 2, 3], y: [3, 3, 9] });
@@ -103,7 +103,7 @@ test('with scientific notation', () => {
 test('large IV scientific notation file', () => {
   let filename = 'text9.txt';
   let data = readFileSync(path + filename).toString();
-  let result = parseXY(data, {});
+  let result = parseXY(data, {}) as DataXY;
   expect(result.x).toHaveLength(6472);
   expect(result.y).toHaveLength(6472);
 });

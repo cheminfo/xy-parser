@@ -1,24 +1,48 @@
-import { ensureString } from "ensure-string";
-import mlArrayMax from "ml-array-max";
-import uniqueXFunction from "ml-arrayxy-uniquex";
-import { xIsMonotone } from "ml-spectra-processing";
+import { ensureString } from 'ensure-string';
+import mlArrayMax from 'ml-array-max';
+import uniqueXFunction from 'ml-arrayxy-uniquex';
+import { xIsMonotone } from 'ml-spectra-processing';
 
+export interface DataXY {
+  x: number[];
+  y: number[];
+}
+export interface ParseXYOptions {
+  rescale?: boolean;
+  uniqueX?: boolean;
+  xColumn?: number;
+  yColumn?: number;
+  keepInfo?: boolean;
+  bestGuess?: boolean;
+  numberColumns?: number;
+  maxNumberColumns?: number;
+  minNumberColumns?: number;
+}
 /**
- * Parse a text-file and convert it to an array of XY points
- * @param {string} text - csv or tsv strings
- * @param {object} [options={}]
- * @param {boolean} [options.rescale = false] - will set the maximum value to 1
- * @param {boolean} [options.uniqueX = false] - Make the X values unique (works only with 'xxyy' format). If the X value is repeated the sum of Y is done.
- * @param {number} [options.xColumn = 0] - A number that specifies the x column
- * @param {number} [options.yColumn = 1] - A number that specifies the y column
- * @param {boolean} [options.bestGuess=false] Will try to guess which columns are the best
- * @param {number} [options.numberColumns=Number.MAX_SAFE_INTEGER] If the file has 10 columns and you specify here 2 it will reflow the file
- * @param {number} [options.maxNumberColumns = (Math.max(xColumn, yColumn)+1)] - A number that specifies the maximum number of y columns
- * @param {number} [options.minNumberColumns = (Math.min(xColumn, yColumn)+1)] - A number that specifies the minimum number of y columns
- * @param {boolean} [options.keepInfo = false] - should we keep the non numeric lines. In this case the system will return an object {data, info}
- * @return {object{x:<Array<number>>,y:<Array<number>>}
+ * Parse a text-file and convert it to an array of XY points.
+ *
+ * @param text - Csv or tsv strings.
+ * @param [options={}] -
+ * @param [options.rescale = false] - Will set the maximum value to 1.
+ * @param [options.uniqueX = false] - Make the X values unique (works only with 'xxyy' format). If the X value is repeated the sum of Y is done.
+ * @param [options.xColumn = 0] - A number that specifies the x column.
+ * @param [options.yColumn = 1] - A number that specifies the y column.
+ * @param [options.bestGuess=false] - Will try to guess which columns are the best.
+ * @param [options.numberColumns=Number.MAX_SAFE_INTEGER] - If the file has 10 columns and you specify here 2 it will reflow the file.
+ * @param [options.maxNumberColumns = (Math.max(xColumn, yColumn)+1)] - A number that specifies the maximum number of y columns.
+ * @param [options.minNumberColumns = (Math.min(xColumn, yColumn)+1)] - A number that specifies the minimum number of y columns.
+ * @param [options.keepInfo = false] - Should we keep the non numeric lines. In this case the system will return an object {data, info}.
+ * @returns -
  */
-export function parseXY(text, options = {}) {
+export function parseXY(
+  text: string,
+  options: ParseXYOptions = {},
+):
+  | {
+      info: { position: number; value: string }[];
+      data: DataXY;
+    }
+  | DataXY {
   let {
     rescale = false,
     uniqueX = false,
@@ -38,13 +62,13 @@ export function parseXY(text, options = {}) {
 
   let lines = text.split(/[\r\n]+/);
 
-  let matrix = [];
-  let info = [];
+  let matrix: number[][] = [];
+  let info: { position: number; value: string }[] = [];
   let position = 0;
-  for (let l = 0; l < lines.length; l++) {
-    let line = lines[l].trim();
+  lines.forEach((line) => {
+    line = line.trim();
     // we will consider only lines that contains only numbers
-    if (line.match(/[0-9]+/) && line.match(/^[0-9eE,;. \t+-]+$/)) {
+    if (/[0-9]+/.test(line) && /^[0-9eE,;. \t+-]+$/.test(line)) {
       let fields = line.split(/,[; \t]+|[; \t]+/);
       if (fields.length === 1) {
         fields = line.split(/[,; \t]+/);
@@ -54,13 +78,13 @@ export function parseXY(text, options = {}) {
         fields.length >= minNumberColumns && // we filter lines that have not enough or too many columns
         fields.length <= maxNumberColumns
       ) {
-        matrix.push(fields.map((value) => parseFloat(value.replace(",", "."))));
+        matrix.push(fields.map((value) => parseFloat(value.replace(',', '.'))));
         position++;
       }
     } else if (line) {
       info.push({ position, value: line });
     }
-  }
+  });
 
   if (bestGuess) {
     if (
@@ -82,7 +106,7 @@ export function parseXY(text, options = {}) {
       }
     }
     if (matrix[0] && matrix[0].length > 3) {
-      let xs = [];
+      const xs: number[] = [];
       for (let row of matrix) {
         for (let i = xColumn; i < row.length; i += 2) {
           xs.push(row[i]);
@@ -95,7 +119,7 @@ export function parseXY(text, options = {}) {
   }
 
   if (numberColumns) {
-    const newMatrix = [];
+    const newMatrix: number[][] = [];
     for (const row of matrix) {
       for (let i = 0; i < row.length; i += numberColumns) {
         newMatrix.push(row.slice(i, i + numberColumns));
