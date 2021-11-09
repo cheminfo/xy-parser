@@ -1,247 +1,286 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset='utf-8'>
-  <title>xy-parser 3.1.0 | Documentation</title>
-  <meta name='description' content='Parse a text-file and convert it to an array of XY points'>
-  <meta name='viewport' content='width=device-width,initial-scale=1'>
-  <link href='assets/bass.css' rel='stylesheet'>
-  <link href='assets/style.css' rel='stylesheet'>
-  <link href='assets/github.css' rel='stylesheet'>
-  <link href='assets/split.css' rel='stylesheet'>
-</head>
-<body class='documentation m0'>
-    <div class='flex'>
-      <div id='split-left' class='overflow-auto fs0 height-viewport-100'>
-        <div class='py1 px2'>
-          <h3 class='mb0 no-anchor'>xy-parser</h3>
-          <div class='mb1'><code>3.1.0</code></div>
+  <head>
+    <meta charset="utf-8" />
+    <title>xy-parser 3.1.0 | Documentation</title>
+    <meta
+      name="description"
+      content="Parse a text-file and convert it to an array of XY points"
+    />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <link href="assets/bass.css" rel="stylesheet" />
+    <link href="assets/style.css" rel="stylesheet" />
+    <link href="assets/github.css" rel="stylesheet" />
+    <link href="assets/split.css" rel="stylesheet" />
+  </head>
+  <body class="documentation m0">
+    <div class="flex">
+      <div id="split-left" class="overflow-auto fs0 height-viewport-100">
+        <div class="py1 px2">
+          <h3 class="mb0 no-anchor">xy-parser</h3>
+          <div class="mb1"><code>3.1.0</code></div>
           <input
-            placeholder='Filter'
-            id='filter-input'
-            class='col12 block input'
-            spellcheck='false'
-            autocapitalize='off'
-            autocorrect='off'
-            type='text' />
-          <div id='toc'>
-            <ul class='list-reset h5 py1-ul'>
-              
-                
-                <li><a
-                  href='#parsexy'
-                  class="">
-                  parseXY
-                  
-                </a>
-                
-                </li>
-              
+            placeholder="Filter"
+            id="filter-input"
+            class="col12 block input"
+            spellcheck="false"
+            autocapitalize="off"
+            autocorrect="off"
+            type="text"
+          />
+          <div id="toc">
+            <ul class="list-reset h5 py1-ul">
+              <li><a href="#parsexy" class=""> parseXY </a></li>
             </ul>
           </div>
-          <div class='mt1 h6 quiet'>
-            <a href='https://documentation.js.org/reading-documentation.html'>Need help reading this?</a>
+          <div class="mt1 h6 quiet">
+            <a href="https://documentation.js.org/reading-documentation.html"
+              >Need help reading this?</a
+            >
           </div>
         </div>
       </div>
-      <div id='split-right' class='relative overflow-auto height-viewport-100'>
-        
-          
-          <section class='p2 mb2 clearfix bg-white minishadow'>
+      <div id="split-right" class="relative overflow-auto height-viewport-100">
+        <section class="p2 mb2 clearfix bg-white minishadow">
+          <div class="clearfix">
+            <h3 class="fl m0" id="parsexy">parseXY</h3>
 
-  
-  <div class='clearfix'>
-    
-    <h3 class='fl m0' id='parsexy'>
-      parseXY
-    </h3>
-    
-    
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/cheminfo/xy-parser/blob/8e9bf8c85e9078d6f384f00b14d0ea1d30de7d98/src/index.js#L19-L124'>
-      <span>src/index.js</span>
-      </a>
-    
-  </div>
-  
-
-  <p>Parse a text-file and convert it to an array of XY points</p>
-
-    <div class='pre p1 fill-light mt0'>parseXY(text: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, options: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>)</div>
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>text</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
-	    csv or tsv strings
-
+            <a
+              class="fr fill-darken0 round round pad1x quiet h5"
+              href="https://github.com/cheminfo/xy-parser/blob/8e9bf8c85e9078d6f384f00b14d0ea1d30de7d98/src/index.js#L19-L124"
+            >
+              <span>src/index.js</span>
+            </a>
           </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>options</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>
-            = <code>{}</code>)</code>
-	    
+
+          <p>Parse a text-file and convert it to an array of XY points</p>
+
+          <div class="pre p1 fill-light mt0">
+            parseXY(text:
+            <a
+              href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String"
+              >string</a
+            >, options:
+            <a
+              href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object"
+              >object</a
+            >)
           </div>
-          
-          <table class='mt1 mb2 fixed-table h5 col-12'>
-            <colgroup>
-              <col width='30%' />
-              <col width='70%' />
-            </colgroup>
-            <thead>
-              <tr class='bold fill-light'>
-                <th>Name</th>
-                <th>Description</th>
-              </tr>
-            </thead>
-            <tbody class='mt1'>
-              
-                <tr>
-  <td class='break-word'><span class='code bold'>options.rescale</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></code>
-  
-    (default <code>false</code>)
-  </td>
-  <td class='break-word'><span>will set the maximum value to 1
-</span></td>
-</tr>
 
+          <div class="py1 quiet mt1 prose-big">Parameters</div>
+          <div class="prose">
+            <div class="space-bottom0">
+              <div>
+                <span class="code bold">text</span>
+                <code class="quiet"
+                  >(<a
+                    href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String"
+                    >string</a
+                  >)</code
+                >
+                csv or tsv strings
+              </div>
+            </div>
 
-              
-                <tr>
-  <td class='break-word'><span class='code bold'>options.uniqueX</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></code>
-  
-    (default <code>false</code>)
-  </td>
-  <td class='break-word'><span>Make the X values unique (works only with 'xxyy' format). If the X value is repeated the sum of Y is done.
-</span></td>
-</tr>
+            <div class="space-bottom0">
+              <div>
+                <span class="code bold">options</span>
+                <code class="quiet"
+                  >(<a
+                    href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object"
+                    >object</a
+                  >
+                  = <code>{}</code>)</code
+                >
+              </div>
 
+              <table class="mt1 mb2 fixed-table h5 col-12">
+                <colgroup>
+                  <col width="30%" />
+                  <col width="70%" />
+                </colgroup>
+                <thead>
+                  <tr class="bold fill-light">
+                    <th>Name</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody class="mt1">
+                  <tr>
+                    <td class="break-word">
+                      <span class="code bold">options.rescale</span>
+                      <code class="quiet"
+                        ><a
+                          href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean"
+                          >boolean</a
+                        ></code
+                      >
 
-              
-                <tr>
-  <td class='break-word'><span class='code bold'>options.xColumn</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code>
-  
-    (default <code>0</code>)
-  </td>
-  <td class='break-word'><span>A number that specifies the x column
-</span></td>
-</tr>
+                      (default <code>false</code>)
+                    </td>
+                    <td class="break-word">
+                      <span>will set the maximum value to 1 </span>
+                    </td>
+                  </tr>
 
+                  <tr>
+                    <td class="break-word">
+                      <span class="code bold">options.uniqueX</span>
+                      <code class="quiet"
+                        ><a
+                          href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean"
+                          >boolean</a
+                        ></code
+                      >
 
-              
-                <tr>
-  <td class='break-word'><span class='code bold'>options.yColumn</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code>
-  
-    (default <code>1</code>)
-  </td>
-  <td class='break-word'><span>A number that specifies the y column
-</span></td>
-</tr>
+                      (default <code>false</code>)
+                    </td>
+                    <td class="break-word">
+                      <span
+                        >Make the X values unique (works only with 'xxyy'
+                        format). If the X value is repeated the sum of Y is
+                        done.
+                      </span>
+                    </td>
+                  </tr>
 
+                  <tr>
+                    <td class="break-word">
+                      <span class="code bold">options.xColumn</span>
+                      <code class="quiet"
+                        ><a
+                          href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number"
+                          >number</a
+                        ></code
+                      >
 
-              
-                <tr>
-  <td class='break-word'><span class='code bold'>options.bestGuess</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></code>
-  
-    (default <code>false</code>)
-  </td>
-  <td class='break-word'><span>Will try to guess which columns are the best
-</span></td>
-</tr>
+                      (default <code>0</code>)
+                    </td>
+                    <td class="break-word">
+                      <span>A number that specifies the x column </span>
+                    </td>
+                  </tr>
 
+                  <tr>
+                    <td class="break-word">
+                      <span class="code bold">options.yColumn</span>
+                      <code class="quiet"
+                        ><a
+                          href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number"
+                          >number</a
+                        ></code
+                      >
 
-              
-                <tr>
-  <td class='break-word'><span class='code bold'>options.numberColumns</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code>
-  
-    (default <code>Number.MAX_SAFE_INTEGER</code>)
-  </td>
-  <td class='break-word'><span>If the file has 10 columns and you specify here 2 it will reflow the file
-</span></td>
-</tr>
+                      (default <code>1</code>)
+                    </td>
+                    <td class="break-word">
+                      <span>A number that specifies the y column </span>
+                    </td>
+                  </tr>
 
+                  <tr>
+                    <td class="break-word">
+                      <span class="code bold">options.bestGuess</span>
+                      <code class="quiet"
+                        ><a
+                          href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean"
+                          >boolean</a
+                        ></code
+                      >
 
-              
-                <tr>
-  <td class='break-word'><span class='code bold'>options.maxNumberColumns</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code>
-  
-    (default <code>(Math.max(xColumn,yColumn)+1)</code>)
-  </td>
-  <td class='break-word'><span>A number that specifies the maximum number of y columns
-</span></td>
-</tr>
+                      (default <code>false</code>)
+                    </td>
+                    <td class="break-word">
+                      <span>Will try to guess which columns are the best </span>
+                    </td>
+                  </tr>
 
+                  <tr>
+                    <td class="break-word">
+                      <span class="code bold">options.numberColumns</span>
+                      <code class="quiet"
+                        ><a
+                          href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number"
+                          >number</a
+                        ></code
+                      >
 
-              
-                <tr>
-  <td class='break-word'><span class='code bold'>options.minNumberColumns</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code>
-  
-    (default <code>(Math.min(xColumn,yColumn)+1)</code>)
-  </td>
-  <td class='break-word'><span>A number that specifies the minimum number of y columns
-</span></td>
-</tr>
+                      (default <code>Number.MAX_SAFE_INTEGER</code>)
+                    </td>
+                    <td class="break-word">
+                      <span
+                        >If the file has 10 columns and you specify here 2 it
+                        will reflow the file
+                      </span>
+                    </td>
+                  </tr>
 
+                  <tr>
+                    <td class="break-word">
+                      <span class="code bold">options.maxNumberColumns</span>
+                      <code class="quiet"
+                        ><a
+                          href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number"
+                          >number</a
+                        ></code
+                      >
 
-              
-                <tr>
-  <td class='break-word'><span class='code bold'>options.keepInfo</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></code>
-  
-    (default <code>false</code>)
-  </td>
-  <td class='break-word'><span>shoud we keep the non numeric lines. In this case the system will return an object {data, info}
-</span></td>
-</tr>
+                      (default <code>(Math.max(xColumn,yColumn)+1)</code>)
+                    </td>
+                    <td class="break-word">
+                      <span
+                        >A number that specifies the maximum number of y columns
+                      </span>
+                    </td>
+                  </tr>
 
+                  <tr>
+                    <td class="break-word">
+                      <span class="code bold">options.minNumberColumns</span>
+                      <code class="quiet"
+                        ><a
+                          href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number"
+                          >number</a
+                        ></code
+                      >
 
-              
-            </tbody>
-          </table>
-          
-        </div>
-      
-    </div>
-  
+                      (default <code>(Math.min(xColumn,yColumn)+1)</code>)
+                    </td>
+                    <td class="break-word">
+                      <span
+                        >A number that specifies the minimum number of y columns
+                      </span>
+                    </td>
+                  </tr>
 
-  
+                  <tr>
+                    <td class="break-word">
+                      <span class="code bold">options.keepInfo</span>
+                      <code class="quiet"
+                        ><a
+                          href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean"
+                          >boolean</a
+                        ></code
+                      >
 
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-</section>
-
-          
-        
+                      (default <code>false</code>)
+                    </td>
+                    <td class="break-word">
+                      <span
+                        >shoud we keep the non numeric lines. In this case the
+                        system will return an object {data, info}
+                      </span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
       </div>
     </div>
-  <script src='assets/anchor.js'></script>
-  <script src='assets/split.js'></script>
-  <script src='assets/site.js'></script>
-</body>
+    <script src="assets/anchor.js"></script>
+    <script src="assets/split.js"></script>
+    <script src="assets/site.js"></script>
+  </body>
 </html>
