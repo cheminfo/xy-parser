@@ -1,5 +1,16 @@
 # Changelog
 
+## [4.0.0](https://www.github.com/cheminfo/xy-parser/compare/v3.2.0...v4.0.0) (2021-11-09)
+
+
+### ⚠ BREAKING CHANGES
+
+* migrate to typescript
+
+### Features
+
+* migrate to typescript ([b067462](https://www.github.com/cheminfo/xy-parser/commit/b067462c1006045b7ec4fa9eed089ef3dcabeb1b))
+
 ## [3.2.0](https://www.github.com/cheminfo/xy-parser/compare/v3.1.1...v3.2.0) (2021-07-14)
 
 
