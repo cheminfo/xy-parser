@@ -1,5 +1,12 @@
 # Changelog
 
+### [4.0.1](https://www.github.com/cheminfo/xy-parser/compare/v4.0.0...v4.0.1) (2021-12-15)
+
+
+### Bug Fixes
+
+* update dependencies to remove indirect ml-gsd dependency ([cd94401](https://www.github.com/cheminfo/xy-parser/commit/cd944016a0c5c8370de16217d35296f24fab31f7))
+
 ## [4.0.0](https://www.github.com/cheminfo/xy-parser/compare/v3.2.0...v4.0.0) (2021-11-09)
 
 
