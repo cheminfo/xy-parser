@@ -1,5 +1,16 @@
 # Changelog
 
+## [5.0.0](https://www.github.com/cheminfo/xy-parser/compare/v4.0.1...v5.0.0) (2022-02-16)
+
+
+### ⚠ BREAKING CHANGES
+
+* remove keepInfo option and add parseXYAndKeepInfo public function
+
+### Features
+
+* remove keepInfo option and add parseXYAndKeepInfo public function ([72d20da](https://www.github.com/cheminfo/xy-parser/commit/72d20da3fd30ece0978184c4c036b39b3c878fe5))
+
 ### [4.0.1](https://www.github.com/cheminfo/xy-parser/compare/v4.0.0...v4.0.1) (2021-12-15)
 
 
