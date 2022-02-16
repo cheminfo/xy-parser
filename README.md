@@ -26,7 +26,7 @@ Parse a text-file and convert it to an array of XY points.
 ## Usage
 
 ```js
-import { parseXY } from "xy-parser";
+import { parseXY } from 'xy-parser';
 const data = `My file
 1   2
 3   4
@@ -41,7 +41,7 @@ const result = parseXY(data);
   }
 */
 
-const result2 = parseXY(data, { keepInfo: true });
+const result2 = parseXYAndKeppInfo(data);
 /* result2 ->
     data: {
       x: [1, 3, 5, 7],
