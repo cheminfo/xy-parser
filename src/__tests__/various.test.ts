@@ -1,13 +1,13 @@
 import { readFileSync } from 'fs';
 
-import { DataXY, parseXY } from '..';
+import { parseXY, parseXYAndKeepInfo } from '..';
 
 const path = `${__dirname}/../../testFiles/`;
 
 test('text1', () => {
   let filename = 'text1.txt';
   let data = readFileSync(path + filename).toString();
-  let result = parseXY(data) as DataXY;
+  let result = parseXY(data);
 
   expect(result.x).toBeInstanceOf(Array);
   expect(result.y).toBeInstanceOf(Array);
@@ -18,7 +18,7 @@ test('text1', () => {
 test('text2', () => {
   let filename = 'text2.txt';
   let data = readFileSync(path + filename).toString();
-  let result = parseXY(data) as DataXY;
+  let result = parseXY(data);
 
   expect(result.x).toBeInstanceOf(Array);
   expect(result.y).toBeInstanceOf(Array);
@@ -31,7 +31,7 @@ test('text3', () => {
   let data = readFileSync(path + filename).toString();
   let result = parseXY(data, {
     uniqueX: true,
-  }) as DataXY;
+  });
 
   expect(result.x).toBeInstanceOf(Array);
   expect(result).toStrictEqual({ x: [1, 2, 3], y: [3, 3, 9] });
@@ -42,7 +42,7 @@ test('with some spaces', () => {
   let data = readFileSync(path + filename).toString();
   let result = parseXY(data, {
     uniqueX: true,
-  }) as DataXY;
+  });
 
   expect(result.x).toBeInstanceOf(Array);
   expect(result).toStrictEqual({ x: [1, 2, 3], y: [3, 3, 9] });
@@ -68,9 +68,7 @@ test('with some non numeric lines', () => {
 test('with some non numeric lines and keeping info', () => {
   let filename = 'text6.txt';
   let data = readFileSync(path + filename).toString();
-  let result = parseXY(data, {
-    keepInfo: true,
-  });
+  let result = parseXYAndKeepInfo(data);
   expect(result).toStrictEqual({
     data: { x: [1, 3, 5], y: [4, 6, 8] },
     info: [
@@ -88,12 +86,19 @@ test('with comma as decimal delimiter', () => {
   expect(result).toStrictEqual({ x: [1.1, 2.2, 3.3], y: [1, 2, 3] });
 });
 
+test('should not use keepInfo', () => {
+  expect(() => {
+    // @ts-expect-error we are testing an old option property
+    parseXY('', { keepInfo: true });
+  }).toThrow(
+    'keepInfo has been deprecated, pelase use the new method parseXYAndKeepInfo',
+  );
+});
+
 test('with scientific notation', () => {
   let filename = 'text8.txt';
   let data = readFileSync(path + filename).toString();
-  let result = parseXY(data, {
-    keepInfo: true,
-  });
+  let result = parseXYAndKeepInfo(data);
   expect(result).toStrictEqual({
     data: { x: [0.11, -11, 0.11], y: [0.22, -22, 0.22] },
     info: [{ position: 0, value: 'Ewe/V <I>/mA' }],
@@ -103,7 +108,7 @@ test('with scientific notation', () => {
 test('large IV scientific notation file', () => {
   let filename = 'text9.txt';
   let data = readFileSync(path + filename).toString();
-  let result = parseXY(data, {}) as DataXY;
+  let result = parseXY(data, {});
   expect(result.x).toHaveLength(6472);
   expect(result.y).toHaveLength(6472);
 });
