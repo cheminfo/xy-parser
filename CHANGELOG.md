@@ -1,5 +1,12 @@
 # Changelog
 
+### [5.0.1](https://www.github.com/cheminfo/xy-parser/compare/v5.0.0...v5.0.1) (2022-02-25)
+
+
+### Bug Fixes
+
+* update dependencies ([ac135b8](https://www.github.com/cheminfo/xy-parser/commit/ac135b825c85fda808769506f4571eb82bff4760))
+
 ## [5.0.0](https://www.github.com/cheminfo/xy-parser/compare/v4.0.1...v5.0.0) (2022-02-16)
 
 
