@@ -1,5 +1,12 @@
 # Changelog
 
+### [5.0.2](https://github.com/cheminfo/xy-parser/compare/v5.0.1...v5.0.2) (2022-03-15)
+
+
+### Bug Fixes
+
+* use TextData as type to allow parsing binary files ([46def82](https://github.com/cheminfo/xy-parser/commit/46def82599f3dc48530d737830ecaab4e52496d8))
+
 ### [5.0.1](https://www.github.com/cheminfo/xy-parser/compare/v5.0.0...v5.0.1) (2022-02-25)
 
 
