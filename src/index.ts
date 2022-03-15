@@ -1,3 +1,5 @@
+import type { TextData } from 'cheminfo-types';
+
 import { ParseXYOptions } from './ParseXYOptions';
 import { parse } from './parse';
 
@@ -10,7 +12,7 @@ export * from './ParseXYOptions';
  * @param options - Parsing options
  * @returns - The parsed data
  */
-export function parseXY(text: string, options: ParseXYOptions = {}) {
+export function parseXY(text: TextData, options: ParseXYOptions = {}) {
   return parse(text, options).data;
 }
 
@@ -21,6 +23,9 @@ export function parseXY(text: string, options: ParseXYOptions = {}) {
  * @param options - Parsing options
  * @returns - The parsed data with information about the columns
  */
-export function parseXYAndKeepInfo(text: string, options: ParseXYOptions = {}) {
+export function parseXYAndKeepInfo(
+  text: TextData,
+  options: ParseXYOptions = {},
+) {
   return parse(text, options);
 }

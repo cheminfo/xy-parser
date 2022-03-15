@@ -1,4 +1,4 @@
-import { DataXY } from 'cheminfo-types';
+import { DataXY, TextData } from 'cheminfo-types';
 import { ensureString } from 'ensure-string';
 import mlArrayMax from 'ml-array-max';
 import uniqueXFunction from 'ml-arrayxy-uniquex';
@@ -14,7 +14,7 @@ import { ParseXYOptions } from './ParseXYOptions';
  * @returns parsed text file with column information
  */
 export function parse(
-  text: string,
+  text: TextData,
   options: ParseXYOptions = {},
 ): {
   info: { position: number; value: string }[];

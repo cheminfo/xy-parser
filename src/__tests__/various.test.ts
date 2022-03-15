@@ -4,6 +4,17 @@ import { parseXY, parseXYAndKeepInfo } from '..';
 
 const path = `${__dirname}/../../testFiles/`;
 
+test('binary', () => {
+  let filename = 'text1.txt';
+  let data = readFileSync(path + filename);
+  let result = parseXY(data);
+
+  expect(result.x).toBeInstanceOf(Array);
+  expect(result.y).toBeInstanceOf(Array);
+  expect(result.x).toHaveLength(13);
+  expect(result.y).toHaveLength(13);
+});
+
 test('text1', () => {
   let filename = 'text1.txt';
   let data = readFileSync(path + filename).toString();
