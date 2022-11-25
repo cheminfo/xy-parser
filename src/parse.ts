@@ -1,8 +1,6 @@
 import { DataXY, TextData } from 'cheminfo-types';
 import { ensureString } from 'ensure-string';
-import mlArrayMax from 'ml-array-max';
-import uniqueXFunction from 'ml-arrayxy-uniquex';
-import { xIsMonotone } from 'ml-spectra-processing';
+import { xyUniqueX, xMaxValue, xIsMonotone } from 'ml-spectra-processing';
 
 import { ParseXYOptions } from './ParseXYOptions';
 
@@ -111,17 +109,17 @@ export function parse(
     }
     matrix = newMatrix;
   }
-  const result = {
+  let result: DataXY = {
     x: matrix.map((row) => row[xColumn]),
     y: matrix.map((row) => row[yColumn]),
   };
 
   if (uniqueX) {
-    uniqueXFunction(result);
+    result = xyUniqueX(result, { algorithm: 'sum' });
   }
 
   if (rescale) {
-    let maxY = mlArrayMax(result.y);
+    let maxY = xMaxValue(result.y);
     for (let i = 0; i < result.y.length; i++) {
       result.y[i] /= maxY;
     }
