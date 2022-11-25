@@ -1,5 +1,12 @@
 # Changelog
 
+## [5.0.3](https://github.com/cheminfo/xy-parser/compare/v5.0.2...v5.0.3) (2022-11-25)
+
+
+### Bug Fixes
+
+* remove ml-array-max and ml-arrayxy-uniquex dependencies ([db582e8](https://github.com/cheminfo/xy-parser/commit/db582e8115f4aae967e286180e1e6db4a80d8b19))
+
 ### [5.0.2](https://github.com/cheminfo/xy-parser/compare/v5.0.1...v5.0.2) (2022-03-15)
 
 
