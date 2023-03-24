@@ -1,6 +1,6 @@
 import { DataXY, TextData } from 'cheminfo-types';
 import { ensureString } from 'ensure-string';
-import { xyUniqueX, xMaxValue, xIsMonotone } from 'ml-spectra-processing';
+import { xyUniqueX, xMaxValue, xIsMonotonic } from 'ml-spectra-processing';
 
 import { ParseXYOptions } from './ParseXYOptions';
 
@@ -94,7 +94,7 @@ export function parse(
           xs.push(row[i]);
         }
       }
-      if (xIsMonotone(xs)) {
+      if (xIsMonotonic(xs)) {
         numberColumns = 2;
       }
     }
