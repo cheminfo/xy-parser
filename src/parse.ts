@@ -6,7 +6,6 @@ import { ParseXYOptions } from './ParseXYOptions';
 
 /**
  * General internal parsing function
- *
  * @param text - Csv or tsv strings.
  * @param options - Parsing options
  * @returns parsed text file with column information
@@ -15,17 +14,19 @@ export function parse(
   text: TextData,
   options: ParseXYOptions = {},
 ): {
-  info: { position: number; value: string }[];
+  info: Array<{ position: number; value: string }>;
   data: DataXY;
 } {
-  let {
+  const {
     rescale = false,
     uniqueX = false,
-    xColumn = 0,
-    yColumn = 1,
     bestGuess = false,
     //@ts-expect-error old library used this property and we want to throw an error so that people are forced to migrate
     keepInfo,
+  } = options;
+  let {
+    xColumn = 0,
+    yColumn = 1,
     numberColumns = Number.MAX_SAFE_INTEGER,
     maxNumberColumns = Number.MAX_SAFE_INTEGER,
     minNumberColumns = 2,
@@ -42,10 +43,10 @@ export function parse(
   maxNumberColumns = Math.max(maxNumberColumns, xColumn + 1, yColumn + 1);
   minNumberColumns = Math.max(xColumn + 1, yColumn + 1, minNumberColumns);
 
-  let lines = text.split(/[\r\n]+/);
+  const lines = text.split(/[\r\n]+/);
 
   let matrix: number[][] = [];
-  let info: { position: number; value: string }[] = [];
+  const info: Array<{ position: number; value: string }> = [];
   let position = 0;
   lines.forEach((line) => {
     line = line.trim();
@@ -89,7 +90,7 @@ export function parse(
     }
     if (matrix[0] && matrix[0].length > 3) {
       const xs: number[] = [];
-      for (let row of matrix) {
+      for (const row of matrix) {
         for (let i = xColumn; i < row.length; i += 2) {
           xs.push(row[i]);
         }
@@ -119,7 +120,7 @@ export function parse(
   }
 
   if (rescale) {
-    let maxY = xMaxValue(result.y);
+    const maxY = xMaxValue(result.y);
     for (let i = 0; i < result.y.length; i++) {
       result.y[i] /= maxY;
     }
