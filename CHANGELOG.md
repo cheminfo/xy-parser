@@ -1,5 +1,13 @@
 # Changelog
 
+## [5.0.5](https://github.com/cheminfo/xy-parser/compare/v5.0.4...v5.0.5) (2024-03-07)
+
+
+### Bug Fixes
+
+* correctly publish coverage ([82d82a9](https://github.com/cheminfo/xy-parser/commit/82d82a909ad134d5d9f96690a13d4bfd9405e49f))
+* update dependencies ([f76472c](https://github.com/cheminfo/xy-parser/commit/f76472cc641ac8b0957c3e0f8d34e7e5e8743cd6))
+
 ## [5.0.4](https://github.com/cheminfo/xy-parser/compare/v5.0.3...v5.0.4) (2023-03-24)
 
 
