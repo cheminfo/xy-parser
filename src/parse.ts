@@ -34,7 +34,7 @@ export function parse(
 
   if (keepInfo !== undefined) {
     throw new Error(
-      'keepInfo has been deprecated, pelase use the new method parseXYAndKeepInfo',
+      'keepInfo has been deprecated, please use the new method parseXYAndKeepInfo',
     );
   }
 
