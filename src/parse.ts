@@ -43,31 +43,33 @@ export function parse(
   maxNumberColumns = Math.max(maxNumberColumns, xColumn + 1, yColumn + 1);
   minNumberColumns = Math.max(xColumn + 1, yColumn + 1, minNumberColumns);
 
-  const lines = text.split(/[\r\n]+/);
+  const lines = text.split(/[\n\r]+/);
 
   let matrix: number[][] = [];
   const info: Array<{ position: number; value: string }> = [];
   let position = 0;
-  lines.forEach((line) => {
+  for (let line of lines) {
     line = line.trim();
     // we will consider only lines that contains only numbers
-    if (/[0-9]+/.test(line) && /^[0-9eE,;. \t+-]+$/.test(line)) {
-      let fields = line.split(/,[; \t]+|[; \t]+/);
+    if (/\d+/.test(line) && /^[\d\t +,.;Ee-]+$/.test(line)) {
+      let fields = line.split(/,[\t ;]+|[\t ;]+/);
       if (fields.length === 1) {
-        fields = line.split(/[,; \t]+/);
+        fields = line.split(/[\t ,;]+/);
       }
       if (
         fields &&
         fields.length >= minNumberColumns && // we filter lines that have not enough or too many columns
         fields.length <= maxNumberColumns
       ) {
-        matrix.push(fields.map((value) => parseFloat(value.replace(',', '.'))));
+        matrix.push(
+          fields.map((value) => Number.parseFloat(value.replace(',', '.'))),
+        );
         position++;
       }
     } else if (line) {
       info.push({ position, value: line });
     }
-  });
+  }
 
   if (bestGuess) {
     if (
