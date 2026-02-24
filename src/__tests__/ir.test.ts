@@ -1,14 +1,17 @@
 import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
 
-import { parseXY } from '../index';
+import { expect, test } from 'vitest';
 
-const path = `${__dirname}/../../testFiles/`;
+import { parseXY } from '../index.ts';
+
+const testFilesPath = join(import.meta.dirname, '../../testFiles');
 
 test('ir.asc', () => {
-  const filename = 'ir.asc';
-  const data = readFileSync(path + filename).toString();
+  const data = readFileSync(join(testFilesPath, 'ir.asc')).toString();
 
   const result = parseXY(data);
+
   expect(result.x).toBeInstanceOf(Array);
   expect(result.y).toBeInstanceOf(Array);
   expect(result.x).toHaveLength(3401);
@@ -16,8 +19,7 @@ test('ir.asc', () => {
 });
 
 test('ir2.asc', () => {
-  const filename = 'ir2.asc';
-  const data = readFileSync(path + filename).toString();
+  const data = readFileSync(join(testFilesPath, 'ir2.asc')).toString();
 
   const result = parseXY(data);
 

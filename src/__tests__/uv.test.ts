@@ -1,12 +1,14 @@
 import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
 
-import { parseXY } from '..';
+import { expect, test } from 'vitest';
 
-const path = `${__dirname}/../../testFiles/`;
+import { parseXY } from '../index.ts';
+
+const testFilesPath = join(import.meta.dirname, '../../testFiles');
 
 test('uv.csv', () => {
-  const filename = 'uv.csv';
-  const data = readFileSync(path + filename).toString();
+  const data = readFileSync(join(testFilesPath, 'uv.csv')).toString();
 
   const result = parseXY(data);
 

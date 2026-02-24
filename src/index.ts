@@ -1,9 +1,9 @@
 import type { TextData } from 'cheminfo-types';
 
-import { ParseXYOptions } from './ParseXYOptions';
-import { parse } from './parse';
+import type { ParseXYOptions } from './ParseXYOptions.ts';
+import { parse } from './parse.ts';
 
-export * from './ParseXYOptions';
+export * from './ParseXYOptions.ts';
 
 /**
  * Parse a text-file and convert it to an object {x:[], y:[]}

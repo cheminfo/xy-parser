@@ -1,19 +1,21 @@
 import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
 
-import { parseXY } from '..';
+import { expect, test } from 'vitest';
 
-const path = `${__dirname}/../../testFiles/`;
-const filename = 'simple.txt';
-const data = readFileSync(path + filename).toString();
+import { parseXY } from '../index.ts';
 
-describe('simple test', () => {
-  it('Check array and length without options', () => {
-    const result1 = parseXY(data);
-    expect(result1).toStrictEqual({ x: [1, 3, 5, 7], y: [2, 4, 6, 8] });
-  });
+const testFilesPath = join(import.meta.dirname, '../../testFiles');
+const data = readFileSync(join(testFilesPath, 'simple.txt')).toString();
 
-  it('Check array and length with options normalize:true', () => {
-    const result2 = parseXY(data, { rescale: true });
-    expect(result2).toStrictEqual({ x: [1, 3, 5, 7], y: [0.25, 0.5, 0.75, 1] });
-  });
+test('Check array and length without options', () => {
+  const result1 = parseXY(data);
+
+  expect(result1).toStrictEqual({ x: [1, 3, 5, 7], y: [2, 4, 6, 8] });
+});
+
+test('Check array and length with options normalize:true', () => {
+  const result2 = parseXY(data, { rescale: true });
+
+  expect(result2).toStrictEqual({ x: [1, 3, 5, 7], y: [0.25, 0.5, 0.75, 1] });
 });

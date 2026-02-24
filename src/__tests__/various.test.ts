@@ -1,12 +1,14 @@
 import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
 
-import { parseXY, parseXYAndKeepInfo } from '..';
+import { expect, test } from 'vitest';
 
-const path = `${__dirname}/../../testFiles/`;
+import { parseXY, parseXYAndKeepInfo } from '../index.ts';
+
+const testFilesPath = join(import.meta.dirname, '../../testFiles');
 
 test('binary', () => {
-  const filename = 'text1.txt';
-  const data = readFileSync(path + filename);
+  const data = readFileSync(join(testFilesPath, 'text1.txt'));
   const result = parseXY(data);
 
   expect(result.x).toBeInstanceOf(Array);
@@ -16,8 +18,7 @@ test('binary', () => {
 });
 
 test('text1', () => {
-  const filename = 'text1.txt';
-  const data = readFileSync(path + filename).toString();
+  const data = readFileSync(join(testFilesPath, 'text1.txt')).toString();
   const result = parseXY(data);
 
   expect(result.x).toBeInstanceOf(Array);
@@ -27,8 +28,7 @@ test('text1', () => {
 });
 
 test('text2', () => {
-  const filename = 'text2.txt';
-  const data = readFileSync(path + filename).toString();
+  const data = readFileSync(join(testFilesPath, 'text2.txt')).toString();
   const result = parseXY(data);
 
   expect(result.x).toBeInstanceOf(Array);
@@ -38,8 +38,7 @@ test('text2', () => {
 });
 
 test('text3', () => {
-  const filename = 'text3.txt';
-  const data = readFileSync(path + filename).toString();
+  const data = readFileSync(join(testFilesPath, 'text3.txt')).toString();
   const result = parseXY(data, {
     uniqueX: true,
   });
@@ -49,8 +48,7 @@ test('text3', () => {
 });
 
 test('with some spaces', () => {
-  const filename = 'text4.txt';
-  const data = readFileSync(path + filename).toString();
+  const data = readFileSync(join(testFilesPath, 'text4.txt')).toString();
   const result = parseXY(data, {
     uniqueX: true,
   });
@@ -60,26 +58,26 @@ test('with some spaces', () => {
 });
 
 test('with some spaces and taking second and third column', () => {
-  const filename = 'text5.txt';
-  const data = readFileSync(path + filename).toString();
+  const data = readFileSync(join(testFilesPath, 'text5.txt')).toString();
   const result = parseXY(data, {
     xColumn: 1,
     yColumn: 2,
   });
+
   expect(result).toStrictEqual({ x: [1, 3, 5], y: [4, 6, 8] });
 });
 
 test('with some non numeric lines', () => {
-  const filename = 'text6.txt';
-  const data = readFileSync(path + filename).toString();
+  const data = readFileSync(join(testFilesPath, 'text6.txt')).toString();
   const result = parseXY(data, {});
+
   expect(result).toStrictEqual({ x: [1, 3, 5], y: [4, 6, 8] });
 });
 
 test('with some non numeric lines and keeping info', () => {
-  const filename = 'text6.txt';
-  const data = readFileSync(path + filename).toString();
+  const data = readFileSync(join(testFilesPath, 'text6.txt')).toString();
   const result = parseXYAndKeepInfo(data);
+
   expect(result).toStrictEqual({
     data: { x: [1, 3, 5], y: [4, 6, 8] },
     info: [
@@ -91,9 +89,9 @@ test('with some non numeric lines and keeping info', () => {
 });
 
 test('with comma as decimal delimiter', () => {
-  const filename = 'text7.txt';
-  const data = readFileSync(path + filename).toString();
+  const data = readFileSync(join(testFilesPath, 'text7.txt')).toString();
   const result = parseXY(data, {});
+
   expect(result).toStrictEqual({ x: [1.1, 2.2, 3.3], y: [1, 2, 3] });
 });
 
@@ -101,15 +99,15 @@ test('should not use keepInfo', () => {
   expect(() => {
     // @ts-expect-error we are testing an old option property
     parseXY('', { keepInfo: true });
-  }).toThrow(
-    'keepInfo has been deprecated, pelase use the new method parseXYAndKeepInfo',
+  }).toThrowError(
+    'keepInfo has been deprecated, please use the new method parseXYAndKeepInfo',
   );
 });
 
 test('with scientific notation', () => {
-  const filename = 'text8.txt';
-  const data = readFileSync(path + filename).toString();
+  const data = readFileSync(join(testFilesPath, 'text8.txt')).toString();
   const result = parseXYAndKeepInfo(data);
+
   expect(result).toStrictEqual({
     data: { x: [0.11, -11, 0.11], y: [0.22, -22, 0.22] },
     info: [{ position: 0, value: 'Ewe/V <I>/mA' }],
@@ -117,9 +115,9 @@ test('with scientific notation', () => {
 });
 
 test('large IV scientific notation file', () => {
-  const filename = 'text9.txt';
-  const data = readFileSync(path + filename).toString();
+  const data = readFileSync(join(testFilesPath, 'text9.txt')).toString();
   const result = parseXY(data, {});
+
   expect(result.x).toHaveLength(6472);
   expect(result.y).toHaveLength(6472);
 });

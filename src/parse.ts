@@ -1,8 +1,8 @@
-import { DataXY, TextData } from 'cheminfo-types';
+import type { DataXY, TextData } from 'cheminfo-types';
 import { ensureString } from 'ensure-string';
-import { xyUniqueX, xMaxValue, xIsMonotonic } from 'ml-spectra-processing';
+import { xIsMonotonic, xMaxValue, xyUniqueX } from 'ml-spectra-processing';
 
-import { ParseXYOptions } from './ParseXYOptions';
+import type { ParseXYOptions } from './ParseXYOptions.ts';
 
 /**
  * General internal parsing function
@@ -73,15 +73,16 @@ export function parse(
 
   if (bestGuess) {
     if (
-      matrix[0] &&
-      matrix[0].length === 3 &&
+      matrix[0]?.length === 3 &&
       options.xColumn === undefined &&
       options.yColumn === undefined
     ) {
-      // is the first column a seuqnetial number ?
+      // is the first column a sequential number?
       let skipFirstColumn = true;
       for (let i = 0; i < matrix.length - 1; i++) {
-        if (Math.abs(matrix[i][0] - matrix[i + 1][0]) !== 1) {
+        const currentFirst = (matrix[i] as number[])[0] as number;
+        const nextFirst = (matrix[i + 1] as number[])[0] as number;
+        if (Math.abs(currentFirst - nextFirst) !== 1) {
           skipFirstColumn = false;
         }
       }
@@ -94,7 +95,7 @@ export function parse(
       const xs: number[] = [];
       for (const row of matrix) {
         for (let i = xColumn; i < row.length; i += 2) {
-          xs.push(row[i]);
+          xs.push(row[i] as number);
         }
       }
       if (xIsMonotonic(xs)) {
@@ -113,8 +114,8 @@ export function parse(
     matrix = newMatrix;
   }
   let result: DataXY = {
-    x: matrix.map((row) => row[xColumn]),
-    y: matrix.map((row) => row[yColumn]),
+    x: matrix.map((row) => row[xColumn] as number),
+    y: matrix.map((row) => row[yColumn] as number),
   };
 
   if (uniqueX) {
@@ -123,8 +124,9 @@ export function parse(
 
   if (rescale) {
     const maxY = xMaxValue(result.y);
-    for (let i = 0; i < result.y.length; i++) {
-      result.y[i] /= maxY;
+    const yValues = result.y as number[];
+    for (let i = 0; i < yValues.length; i++) {
+      yValues[i] = (yValues[i] as number) / maxY;
     }
   }
 
