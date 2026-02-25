@@ -1,5 +1,16 @@
 # Changelog
 
+## [6.0.0](https://github.com/cheminfo/xy-parser/compare/v5.0.5...v6.0.0) (2026-02-25)
+
+
+### ⚠ BREAKING CHANGES
+
+* migrate project to type=module
+
+### Miscellaneous Chores
+
+* migrate project to type=module ([811e57d](https://github.com/cheminfo/xy-parser/commit/811e57d840bd376c00084f38a42d5006e7c6e8fc))
+
 ## [5.0.5](https://github.com/cheminfo/xy-parser/compare/v5.0.4...v5.0.5) (2024-03-07)
 
 
