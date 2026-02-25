@@ -5,7 +5,7 @@ import { expect, test } from 'vitest';
 
 import { parseXY } from '../index.ts';
 
-const testFilesPath = join(import.meta.dirname, '../../testFiles');
+const testFilesPath = join(import.meta.dirname, 'data');
 const data = readFileSync(join(testFilesPath, 'simple.txt')).toString();
 
 test('Check array and length without options', () => {

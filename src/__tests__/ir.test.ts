@@ -5,7 +5,7 @@ import { expect, test } from 'vitest';
 
 import { parseXY } from '../index.ts';
 
-const testFilesPath = join(import.meta.dirname, '../../testFiles');
+const testFilesPath = join(import.meta.dirname, 'data');
 
 test('ir.asc', () => {
   const data = readFileSync(join(testFilesPath, 'ir.asc')).toString();

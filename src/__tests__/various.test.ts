@@ -5,7 +5,7 @@ import { expect, test } from 'vitest';
 
 import { parseXY, parseXYAndKeepInfo } from '../index.ts';
 
-const testFilesPath = join(import.meta.dirname, '../../testFiles');
+const testFilesPath = join(import.meta.dirname, 'data');
 
 test('binary', () => {
   const data = readFileSync(join(testFilesPath, 'text1.txt'));
