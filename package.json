@@ -1,6 +1,6 @@
 {
   "name": "xy-parser",
-  "version": "6.0.0",
+  "version": "6.0.1",
   "description": "Parse a text-file and convert it to an array of XY points",
   "type": "module",
   "exports": {

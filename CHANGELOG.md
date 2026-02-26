@@ -1,5 +1,12 @@
 # Changelog
 
+## [6.0.1](https://github.com/cheminfo/xy-parser/compare/v6.0.0...v6.0.1) (2026-02-26)
+
+
+### Bug Fixes
+
+* specify the return value is number[] ([f6a53f6](https://github.com/cheminfo/xy-parser/commit/f6a53f6234d1323322a1d280f20de8cdbb89a601))
+
 ## [6.0.0](https://github.com/cheminfo/xy-parser/compare/v5.0.5...v6.0.0) (2026-02-25)
 
 
