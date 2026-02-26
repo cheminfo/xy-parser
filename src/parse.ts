@@ -15,7 +15,7 @@ export function parse(
   options: ParseXYOptions = {},
 ): {
   info: Array<{ position: number; value: string }>;
-  data: DataXY;
+  data: DataXY<number[]>;
 } {
   const {
     rescale = false,
@@ -113,7 +113,7 @@ export function parse(
     }
     matrix = newMatrix;
   }
-  let result: DataXY = {
+  let result: DataXY<number[]> = {
     x: matrix.map((row) => row[xColumn] as number),
     y: matrix.map((row) => row[yColumn] as number),
   };
@@ -124,7 +124,7 @@ export function parse(
 
   if (rescale) {
     const maxY = xMaxValue(result.y);
-    const yValues = result.y as number[];
+    const yValues = result.y;
     for (let i = 0; i < yValues.length; i++) {
       yValues[i] = (yValues[i] as number) / maxY;
     }

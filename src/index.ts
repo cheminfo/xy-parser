@@ -1,4 +1,4 @@
-import type { TextData } from 'cheminfo-types';
+import type { DataXY, TextData } from 'cheminfo-types';
 
 import type { ParseXYOptions } from './ParseXYOptions.ts';
 import { parse } from './parse.ts';
@@ -11,7 +11,10 @@ export * from './ParseXYOptions.ts';
  * @param options - Parsing options
  * @returns - The parsed data
  */
-export function parseXY(text: TextData, options: ParseXYOptions = {}) {
+export function parseXY(
+  text: TextData,
+  options: ParseXYOptions = {},
+): DataXY<number[]> {
   return parse(text, options).data;
 }
 
@@ -24,6 +27,9 @@ export function parseXY(text: TextData, options: ParseXYOptions = {}) {
 export function parseXYAndKeepInfo(
   text: TextData,
   options: ParseXYOptions = {},
-) {
+): {
+  info: Array<{ position: number; value: string }>;
+  data: DataXY<number[]>;
+} {
   return parse(text, options);
 }
