@@ -99,7 +99,7 @@ test('should not use keepInfo', () => {
   expect(() => {
     // @ts-expect-error we are testing an old option property
     parseXY('', { keepInfo: true });
-  }).toThrowError(
+  }).toThrow(
     'keepInfo has been deprecated, please use the new method parseXYAndKeepInfo',
   );
 });

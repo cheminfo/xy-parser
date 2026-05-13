@@ -40,3 +40,6 @@ lib
 lib-esm
 dist
 docs
+
+.claude
+.DS_Store

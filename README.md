@@ -40,7 +40,7 @@ Thermo Galactic SPC, …).
 ## Usage
 
 ```js
-import { parseXY } from 'xy-parser';
+import { parseXY, parseXYAndKeepInfo } from 'xy-parser';
 const data = `My file
 1   2
 3   4
