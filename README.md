@@ -1,6 +1,20 @@
 # xy-parser
 
-Parse a text-file and convert it to an array of XY points.
+Parse a CSV / TSV / whitespace-separated text file containing scientific
+data — a spectrum, diffractogram, chromatogram, two-column dump from an
+instrument, etc. — and return numeric `x` and `y` arrays.
+
+This is the lightweight building block: if you only need `{x, y}` from a
+text file, use this. If you also need the technique-aware `Analysis`
+wrapper (variables, units, transmittance ↔ absorbance, peak picking),
+reach for [`common-spectrum`](https://github.com/cheminfo/common-spectrum)
+or a domain wrapper like
+[`uv-spectrum`](https://github.com/cheminfo/uv-spectrum) /
+[`ir-spectrum`](https://github.com/cheminfo/ir-spectrum) /
+[`xrd-analysis`](https://github.com/cheminfo/xrd-analysis), all of which
+use `xy-parser` under the hood. For known structured formats use the
+dedicated parser instead (`fromJcamp` for JCAMP-DX, `spc-parser` for
+Thermo Galactic SPC, …).
 
 <h3 align="center">
 
@@ -41,7 +55,7 @@ const result = parseXY(data);
   }
 */
 
-const result2 = parseXYAndKeppInfo(data);
+const result2 = parseXYAndKeepInfo(data);
 /* result2 ->
     data: {
       x: [1, 3, 5, 7],

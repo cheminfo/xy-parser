@@ -1,7 +1,7 @@
 {
   "name": "xy-parser",
   "version": "6.0.1",
-  "description": "Parse a text-file and convert it to an array of XY points",
+  "description": "Parse a CSV / TSV / whitespace-separated text file containing scientific data (spectrum, diffractogram, chromatogram, …) and return numeric x and y arrays.",
   "type": "module",
   "exports": {
     ".": "./lib/index.js"
@@ -29,8 +29,19 @@
     "url": "git+https://github.com/cheminfo/xy-parser.git"
   },
   "keywords": [
-    "xy file parser",
-    "mass spectroscopy"
+    "parse",
+    "parser",
+    "text",
+    "csv",
+    "tsv",
+    "xy",
+    "two-column",
+    "scientific-data",
+    "spectrum",
+    "spectroscopy",
+    "diffractogram",
+    "chromatogram",
+    "mass-spectrometry"
   ],
   "author": "Luc Patiny",
   "license": "MIT",
