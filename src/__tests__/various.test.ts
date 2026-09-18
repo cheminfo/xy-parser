@@ -95,6 +95,24 @@ test('with comma as decimal delimiter', () => {
   expect(result).toStrictEqual({ x: [1.1, 2.2, 3.3], y: [1, 2, 3] });
 });
 
+test('with comma as decimal delimiter and tab as column delimiter', () => {
+  const data = readFileSync(join(testFilesPath, 'comma_tab.txt'));
+  const result = parseXYAndKeepInfo(data);
+
+  expect(result.info).toStrictEqual([
+    { position: 0, value: '##TITLE=No Description' },
+    { position: 0, value: '##DATA TYPE=INFRARED SPECTRUM' },
+    { position: 0, value: '##XUNITS=1/CM' },
+    { position: 0, value: '##YUNITS=%T' },
+  ]);
+  expect(result.data.x).toHaveLength(1868);
+  expect(result.data.y).toHaveLength(1868);
+  expect(result.data.x.slice(0, 2)).toStrictEqual([399.264912, 401.193728]);
+  expect(result.data.y.slice(0, 2)).toStrictEqual([60.840887, 62.774824]);
+  expect(result.data.x.at(-1)).toBe(4000.364384);
+  expect(result.data.y.at(-1)).toBe(84.820001);
+});
+
 test('should not use keepInfo', () => {
   expect(() => {
     // @ts-expect-error we are testing an old option property
