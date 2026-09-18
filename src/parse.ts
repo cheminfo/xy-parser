@@ -61,9 +61,7 @@ export function parse(
         fields.length >= minNumberColumns && // we filter lines that have not enough or too many columns
         fields.length <= maxNumberColumns
       ) {
-        matrix.push(
-          fields.map((value) => Number.parseFloat(value.replace(',', '.'))),
-        );
+        matrix.push(fields.map((value) => Number(value.replace(',', '.'))));
         position++;
       }
     } else if (line) {
@@ -78,15 +76,15 @@ export function parse(
       options.yColumn === undefined
     ) {
       // is the first column a sequential number?
-      let skipFirstColumn = true;
+      let shouldSkipFirstColumn = true;
       for (let i = 0; i < matrix.length - 1; i++) {
         const currentFirst = (matrix[i] as number[])[0] as number;
         const nextFirst = (matrix[i + 1] as number[])[0] as number;
         if (Math.abs(currentFirst - nextFirst) !== 1) {
-          skipFirstColumn = false;
+          shouldSkipFirstColumn = false;
         }
       }
-      if (skipFirstColumn) {
+      if (shouldSkipFirstColumn) {
         xColumn = 1;
         yColumn = 2;
       }

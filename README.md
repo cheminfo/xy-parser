@@ -35,38 +35,57 @@ Thermo Galactic SPC, …).
 
 ## Installation
 
-`$ npm install --save xy-parser`
+```sh
+npm install xy-parser
+```
 
 ## Usage
 
 ```js
 import { parseXY, parseXYAndKeepInfo } from 'xy-parser';
+
 const data = `My file
 1   2
 3   4
 5   6
 7   8`;
+
 const result = parseXY(data);
 /* result ->
-    {
-      x: [1, 3, 5, 7],
-      y: [2, 4, 6, 8]
-    }
+  {
+    x: [1, 3, 5, 7],
+    y: [2, 4, 6, 8],
   }
 */
 
-const result2 = parseXYAndKeepInfo(data);
-/* result2 ->
+const resultWithInfo = parseXYAndKeepInfo(data);
+/* resultWithInfo ->
+  {
+    info: [{ position: 0, value: 'My file' }],
     data: {
       x: [1, 3, 5, 7],
-      y: [2, 4, 6, 8]
+      y: [2, 4, 6, 8],
     },
-    info: [
-      'My file'
-    ]
   }
 */
 ```
+
+Columns may be separated by tabs, spaces, commas or semicolons. When columns
+are separated by tabs, spaces or semicolons, a comma inside a number is read as
+the decimal separator (`1,5\t2,3` gives `x: [1.5]`, `y: [2.3]`).
+
+## Options
+
+| Option             | Default                   | Description                                                                  |
+| ------------------ | ------------------------- | ---------------------------------------------------------------------------- |
+| `xColumn`          | `0`                       | Index of the column used for x.                                              |
+| `yColumn`          | `1`                       | Index of the column used for y.                                              |
+| `bestGuess`        | `false`                   | Try to determine which columns should be used (see below).                   |
+| `numberColumns`    | `Number.MAX_SAFE_INTEGER` | Reflow rows into this many columns (e.g. `2` for an `x1 y1 x2 y2 …` layout). |
+| `minNumberColumns` | `2`                       | Skip lines with fewer columns.                                               |
+| `maxNumberColumns` | `Number.MAX_SAFE_INTEGER` | Skip lines with more columns.                                                |
+| `uniqueX`          | `false`                   | Merge repeated x values, summing their y values.                             |
+| `rescale`          | `false`                   | Divide y by its maximum so that the largest value is 1.                      |
 
 The `bestGuess` option will try to determine which columns should be used.
 
