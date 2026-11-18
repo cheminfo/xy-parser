@@ -1,7 +1,4 @@
 import { defineConfig, globalIgnores } from 'eslint/config';
-import cheminfo from 'eslint-config-cheminfo-typescript';
+import ts from 'eslint-config-cheminfo-typescript';
 
-export default defineConfig([
-  globalIgnores(['coverage', 'dist', 'lib']),
-  cheminfo,
-]);
+export default defineConfig(globalIgnores(['coverage', 'dist', 'lib']), ts);
