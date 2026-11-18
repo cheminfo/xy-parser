@@ -50,11 +50,13 @@ export function parse(
   let position = 0;
   for (let line of lines) {
     line = line.trim();
+    // CSV may quote every field: "111.96929","15872"
+    const values = line.replaceAll('"', '');
     // we will consider only lines that contains only numbers
-    if (/\d+/.test(line) && /^[\d\t +,.;Ee-]+$/.test(line)) {
-      let fields = line.split(/,[\t ;]+|[\t ;]+/);
+    if (/\d+/.test(values) && /^[\d\t +,.;Ee-]+$/.test(values)) {
+      let fields = values.split(/,[\t ;]+|[\t ;]+/);
       if (fields.length === 1) {
-        fields = line.split(/[\t ,;]+/);
+        fields = values.split(/[\t ,;]+/);
       }
       if (
         fields &&

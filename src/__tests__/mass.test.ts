@@ -3,7 +3,7 @@ import { join } from 'node:path';
 
 import { expect, test } from 'vitest';
 
-import { parseXY } from '../index.ts';
+import { parseXY, parseXYAndKeepInfo } from '../index.ts';
 
 const testFilesPath = join(import.meta.dirname, 'data');
 
@@ -76,4 +76,30 @@ test('mass4.spectrum', () => {
   expect(result2.y).toHaveLength(34);
   expect(result2.x[0]).toBe(88.20765);
   expect(result2.y[1]).toBe(13);
+});
+
+test('mass5.csv, a Waters Vion export with quoted fields', () => {
+  const data = readFileSync(join(testFilesPath, 'mass5.csv'));
+
+  const { info, data: result } = parseXYAndKeepInfo(data);
+
+  expect(result.x).toHaveLength(1262);
+  expect(result.y).toHaveLength(1262);
+  expect(result.x.slice(0, 3)).toStrictEqual([111.96929, 114.05488, 139.0057]);
+  expect(result.y.slice(0, 3)).toStrictEqual([15872, 225779, 17538]);
+  expect(result.x.at(-1)).toBe(1863.74806);
+  expect(result.y.at(-1)).toBe(711);
+  expect(info).toStrictEqual([
+    {
+      position: 0,
+      value:
+        '"Observed mass (m/z)","Intensity (Counts)","Intensity (%)","Drift time (ms)","Collision cross section (Å²)"',
+    },
+  ]);
+});
+
+test('quoted fields with a comma decimal separator', () => {
+  const result = parseXY('"100,5";"10"\n"101,5";"20"\n');
+
+  expect(result).toStrictEqual({ x: [100.5, 101.5], y: [10, 20] });
 });
