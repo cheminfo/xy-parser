@@ -1,5 +1,12 @@
 # Changelog
 
+## [6.0.2](https://github.com/cheminfo/xy-parser/compare/v6.0.1...v6.0.2) (2026-11-18)
+
+
+### Bug Fixes
+
+* parse CSV with quoted fields ([d57b32f](https://github.com/cheminfo/xy-parser/commit/d57b32fdceb0515a80e5bdc471eb95137e312dd4))
+
 ## [6.0.1](https://github.com/cheminfo/xy-parser/compare/v6.0.0...v6.0.1) (2026-02-26)
 
 
